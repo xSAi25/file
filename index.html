@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shared Storage</title>
+</head>
+<body>
+
+<h2>Upload File to Public Storage</h2>
+
+<input type="file" id="fileInput" />
+<button onclick="uploadFile()">Upload</button>
+
+<p id="result"></p>
+
+<hr>
+
+<h3>📂 Files in Public Folder</h3>
+<button onclick="loadFiles()">Refresh List</button>
+
+<ul id="fileList"></ul>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9OUpZl3bJLA3Tj8-0FD4CYY4wYH7-uNHb8dob3MdJIm67tSPXzZl_fIxAEs74qxdJ/exec";
+
+function uploadFile() {
+  const file = document.getElementById("fileInput").files[0];
+  if (!file) {
+    alert("Please select a file");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function () {
+    const base64 = reader.result.split(",")[1];
+
+    const formData = new FormData();
+    formData.append("file", base64);
+    formData.append("name", file.name);
+    formData.append("type", file.type);
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      result.innerHTML = `
+        ✅ Uploaded: <strong>${data.fileName}</strong><br>
+        <a href="${data.fileUrl}" target="_blank">View</a> |
+        <a href="${data.fileUrl}&export=download">Download</a>
+      `;
+      loadFiles();
+    });
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function loadFiles() {
+  fetch(SCRIPT_URL)
+    .then(res => res.json())
+    .then(files => {
+      const list = document.getElementById("fileList");
+      list.innerHTML = "";
+
+      files.forEach(file => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${file.name} —
+          <a href="${file.url}" target="_blank">View</a> |
+          <a href="${file.url}&export=download">Download</a>
+        `;
+        list.appendChild(li);
+      });
+    });
+}
+
+loadFiles();
+</script>
+
+</body>
+</html>
