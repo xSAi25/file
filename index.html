@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Happy Valentine's Day</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
@@ -11,23 +10,33 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
+/* ===== DARK THEME (DEFAULT) ===== */
 body{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,#ffb3c6,#590d22);
+  background:radial-gradient(circle at top,#0f0f14,#050507);
   overflow:hidden;
+  transition:background 2s ease;
+}
+
+/* ===== VALENTINE THEME ===== */
+body.valentine{
+  background:radial-gradient(circle at top,#ffb3c6,#590d22);
 }
 
 /* floating hearts */
 .heart{
   position:fixed;
   font-size:18px;
-  opacity:.35;
+  opacity:0;
   animation:float 8s linear infinite;
+  transition:opacity 2s ease;
 }
+body.valentine .heart{opacity:.35;}
+
 @keyframes float{
   from{transform:translateY(100vh)}
   to{transform:translateY(-20vh)}
@@ -37,17 +46,24 @@ body{
 .card{
   width:90%;
   max-width:500px;
-  background:rgba(255,255,255,.18);
+  background:rgba(15,15,25,.65);
   backdrop-filter:blur(20px);
   border-radius:36px;
   padding:30px 20px;
-  box-shadow:0 0 90px rgba(255,105,135,.6);
+  box-shadow:0 0 40px rgba(0,0,0,.8);
   text-align:center;
-  color:white;
+  color:#eaeaea;
   position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
+  transition:all 2s ease;
+}
+
+body.valentine .card{
+  background:rgba(255,255,255,.18);
+  color:white;
+  box-shadow:0 0 90px rgba(255,105,135,.6);
 }
 
 /* header */
@@ -56,35 +72,28 @@ h2{
   letter-spacing:4px;
   margin-bottom:15px;
   font-size:1.5rem;
-  text-align:center;
 }
 
 /* curved text */
-svg{
-  width:100%;
-  height:auto;
-  max-height:180px;
-  margin-bottom:10px;
-}
+svg{width:100%;max-height:180px;margin-bottom:10px;}
 text{
-  font-size:5vw; /* responsive */
+  font-size:5vw;
   font-family:'Playfair Display',serif;
   fill:url(#loveGradient);
   stroke:black;
   stroke-width:1.5;
-  stroke-linejoin:round;
   opacity:0;
-  transition:opacity .25s ease;
+  transition:opacity 1s ease;
 }
 
 /* glow */
 .glow{
-  animation:glow 2.5s infinite alternate;
+  animation:glow 3s infinite alternate;
 }
 @keyframes glow{
   from{
     filter:drop-shadow(0 0 10px #ff5d8f)
-           drop-shadow(0 0 30px #ffb3c6);
+           drop-shadow(0 0 25px #ffb3c6);
   }
   to{
     filter:drop-shadow(0 0 20px #ff8fab)
@@ -93,11 +102,7 @@ text{
 }
 
 /* ring */
-.ring{
-  width:80px;
-  height:80px;
-  margin:15px auto;
-}
+.ring{width:80px;height:80px;margin:15px auto;}
 circle{fill:none;stroke-width:8;stroke-linecap:round}
 .bg{stroke:rgba(255,255,255,.3)}
 .progress{stroke:#ff5d8f;stroke-dasharray:314;stroke-dashoffset:314;}
@@ -108,13 +113,18 @@ button{
   padding:12px 40px;
   border-radius:999px;
   border:none;
-  background:linear-gradient(135deg,#ff5d8f,#ffb3c6);
-  color:#590d22;
+  background:linear-gradient(135deg,#444,#111);
+  color:#fff;
   font-weight:600;
   letter-spacing:2px;
   cursor:pointer;
-  box-shadow:0 8px 25px rgba(255,93,143,.55);
+  box-shadow:0 8px 20px rgba(0,0,0,.6);
   font-size:1rem;
+  transition:all 1.5s ease;
+}
+body.valentine button{
+  background:linear-gradient(135deg,#ff5d8f,#ffb3c6);
+  color:#590d22;
 }
 button:disabled{opacity:.6;cursor:not-allowed}
 
@@ -131,25 +141,25 @@ button:disabled{opacity:.6;cursor:not-allowed}
   }
 }
 
-/* final top text */
+/* final text */
 #finalText{
   position:absolute;
-  top:20px; /* top of card */
+  top:20px;
   left:50%;
   transform:translateX(-50%);
-  font-size:6vw;  /* responsive */
+  font-size:6vw;
   font-family:'Playfair Display',serif;
   color:#ffdee1;
-  letter-spacing:2px;
   opacity:0;
-  text-align:center;
-  text-shadow: 0 0 6px #ff5d8f, 0 0 15px #ffb3c6;
-  transition:opacity 1s ease;
+  text-shadow:0 0 6px #ff5d8f,0 0 15px #ffb3c6;
+  transition:opacity 2s ease;
 }
 </style>
 </head>
+
 <body>
 
+<!-- floating hearts -->
 <script>
 for(let i=0;i<25;i++){
   const h=document.createElement("div");
@@ -166,15 +176,16 @@ for(let i=0;i<25;i++){
 
   <svg viewBox="0 0 500 200">
     <defs>
-      <linearGradient id="loveGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="0">
+      <linearGradient id="loveGradient" x1="0" y1="0" x2="1000" y2="0">
         <stop offset="0%" stop-color="#ff5d8f"/>
         <stop offset="50%" stop-color="#ffb3c6"/>
         <stop offset="100%" stop-color="#ffc2d1"/>
-        <animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="-500 0" dur="5s" repeatCount="indefinite"/>
+        <animateTransform attributeName="gradientTransform"
+          type="translate" from="0 0" to="-500 0"
+          dur="5s" repeatCount="indefinite"/>
       </linearGradient>
       <path id="curve" d="M50 140 Q250 80 450 140"/>
     </defs>
-
     <text id="curvedText">
       <textPath href="#curve" startOffset="50%" text-anchor="middle"></textPath>
     </text>
@@ -186,31 +197,40 @@ for(let i=0;i<25;i++){
   </svg>
 
   <button id="startBtn">OPEN 💘</button>
-
-  <!-- final top text -->
   <div id="finalText">💞 HAPPY VALENTINE’S DAY 💞</div>
 </div>
 
-<audio id="sound" src="https://assets.mixkit.co/sfx/preview/mixkit-soft-bell-2019.mp3"></audio>
+<!-- MUSIC -->
+<audio id="bgMusic" src="habang buhay sa walang hanggan.mp3" loop></audio>
 
 <script>
 const messages=["HAPPY","VALENTINE’S","DAY 💖"];
 
-const title=document.getElementById("title");
 const btn=document.getElementById("startBtn");
+const title=document.getElementById("title");
 const textPath=document.querySelector("textPath");
 const textEl=document.getElementById("curvedText");
 const ring=document.querySelector(".progress");
 const curve=document.getElementById("curve");
-const sound=document.getElementById("sound");
 const finalText=document.getElementById("finalText");
+const bgMusic=document.getElementById("bgMusic");
 
 let started=false, stage=0, i=0, progress=0;
 
-btn.onclick=()=>{
+btn.onclick=async ()=>{
   if(started) return;
   started=true;
   btn.disabled=true;
+
+  document.body.classList.add("valentine");
+
+  try{
+    bgMusic.volume=0.6;
+    await bgMusic.play();
+  }catch(e){
+    console.log("Music blocked:",e);
+  }
+
   playStage();
 };
 
@@ -229,33 +249,29 @@ function playStage(){
       clearInterval(interval);
       finishStage();
     }
-  },40);
+  },60); // slower text
 }
 
 function finishStage(){
-  sound.play();
   textEl.classList.add("glow");
   burst();
 
   setTimeout(()=>{
     stage++;
     if(stage>=messages.length){
-      // Hide curved text and ring
       textEl.style.opacity=0;
       ring.style.display="none";
-      // show final top text
       finalText.style.opacity=1;
       title.textContent="";
       return;
     }
     reset();
     playStage();
-  },2200);
+  },2600);
 }
 
 function reset(){
-  i=0;
-  progress=0;
+  i=0; progress=0;
   ring.style.strokeDashoffset=314;
   textPath.textContent="";
   textEl.style.opacity=0;
@@ -265,7 +281,8 @@ function reset(){
 let t=0;
 (function wave(){
   t+=0.6;
-  curve.setAttribute("d",`M50 140 Q250 ${80+Math.sin(t*.05)*15} 450 140`);
+  curve.setAttribute("d",
+    `M50 140 Q250 ${80+Math.sin(t*.05)*15} 450 140`);
   requestAnimationFrame(wave);
 })();
 
