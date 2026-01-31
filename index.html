@@ -131,13 +131,13 @@ button:disabled{opacity:.6;cursor:not-allowed}
   }
 }
 
-/* final centered text */
+/* final top text */
 #finalText{
   position:absolute;
-  top:50%;
+  top:20px; /* top of card */
   left:50%;
-  transform:translate(-50%, -50%);
-  font-size:7vw;  /* responsive for mobile */
+  transform:translateX(-50%);
+  font-size:6vw;  /* responsive */
   font-family:'Playfair Display',serif;
   color:#ffdee1;
   letter-spacing:2px;
@@ -187,7 +187,7 @@ for(let i=0;i<25;i++){
 
   <button id="startBtn">OPEN 💘</button>
 
-  <!-- final centered text -->
+  <!-- final top text -->
   <div id="finalText">💞 HAPPY VALENTINE’S DAY 💞</div>
 </div>
 
@@ -243,7 +243,7 @@ function finishStage(){
       // Hide curved text and ring
       textEl.style.opacity=0;
       ring.style.display="none";
-      // show final centered text
+      // show final top text
       finalText.style.opacity=1;
       title.textContent="";
       return;
