@@ -43,9 +43,7 @@ body.valentine{
   opacity:0;
   transition:opacity .6s;
 }
-body.valentine .banner{
-  opacity:1;
-}
+body.valentine .banner{opacity:1}
 .banner span{
   display:inline-block;
   padding-left:100%;
@@ -71,19 +69,6 @@ body.valentine .heart{opacity:.35}
   to{transform:translateY(-20vh)}
 }
 
-/* ===== FIREWORKS ===== */
-.firework{
-  position:fixed;
-  font-size:22px;
-  animation:explode 1s ease-out forwards;
-  pointer-events:none;
-  z-index:2;
-}
-@keyframes explode{
-  0%{transform:scale(0);opacity:1}
-  100%{transform:scale(2.5);opacity:0}
-}
-
 /* ===== CARD ===== */
 .card{
   width:90%;
@@ -96,6 +81,19 @@ body.valentine .heart{opacity:.35}
   color:#f3f3f3;
   position:relative;
   z-index:10;
+  overflow:hidden;
+}
+
+/* ===== FIREWORKS (INSIDE CARD) ===== */
+.firework{
+  position:absolute;
+  font-size:22px;
+  animation:explode 1s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes explode{
+  0%{transform:scale(0);opacity:1}
+  100%{transform:scale(2.5);opacity:0}
 }
 
 /* ===== HEADER ===== */
@@ -164,10 +162,16 @@ button{
 
 /* ===== MOBILE UPSIZE ===== */
 @media (max-width:600px){
-  h2{font-size:3.2rem;}
-  text{font-size:8vw;}
-  #finalText{font-size:10vw;}
-  button{font-size:1.25rem;}
+  h2{font-size:3.6rem;}
+  text{font-size:10vw;}
+  #finalText{font-size:12vw;}
+  button{font-size:1.35rem;padding:16px 48px;}
+}
+
+@media (max-width:400px){
+  h2{font-size:4rem;}
+  text{font-size:12vw;}
+  #finalText{font-size:14vw;}
 }
 </style>
 </head>
@@ -192,7 +196,7 @@ for(let i=0;i<25;i++){
 }
 </script>
 
-<div class="card">
+<div class="card" id="card">
   <h2 id="headerText">For You 💌</h2>
 
   <svg viewBox="0 0 500 200">
@@ -221,6 +225,7 @@ const messages=["HAPPY","VALENTINE’S","DAY 💖"];
 const headers=["For You 💌","With Love 💖","Just for You 💝"];
 
 const btn=document.getElementById("startBtn");
+const card=document.getElementById("card");
 const textPath=document.querySelector("textPath");
 const textEl=document.getElementById("curvedText");
 const ring=document.querySelector(".progress");
@@ -231,13 +236,13 @@ const music=document.getElementById("bgMusic");
 let stage=0,i=0,progress=0,started=false;
 
 function fireworks(){
-  for(let k=0;k<10;k++){
+  for(let k=0;k<8;k++){
     const f=document.createElement("div");
     f.className="firework";
     f.textContent="💖";
-    f.style.left=Math.random()*100+"vw";
-    f.style.top=Math.random()*60+"vh";
-    document.body.appendChild(f);
+    f.style.left=Math.random()*100+"%";
+    f.style.top=Math.random()*100+"%";
+    card.appendChild(f);
     setTimeout(()=>f.remove(),1000);
   }
 }
@@ -246,11 +251,8 @@ btn.onclick=()=>{
   if(started) return;
   started=true;
   btn.disabled=true;
-
-  music.currentTime=0;
   music.play();
-
-  document.body.classList.add("valentine"); // ✅ banner shows here
+  document.body.classList.add("valentine");
   playStage();
 };
 
