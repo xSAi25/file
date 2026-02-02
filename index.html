@@ -40,6 +40,11 @@ body.valentine{
   white-space:nowrap;
   z-index:3;
   pointer-events:none;
+  opacity:0;
+  transition:opacity .6s;
+}
+body.valentine .banner{
+  opacity:1;
 }
 .banner span{
   display:inline-block;
@@ -96,7 +101,7 @@ body.valentine .heart{opacity:.35}
 /* ===== HEADER ===== */
 h2{
   font-family:'Parisienne',cursive;
-  font-size:2.4rem;
+  font-size:2.6rem;
   margin-bottom:12px;
   color:#ffd6e0;
   transition:opacity .6s;
@@ -113,15 +118,6 @@ text{
   stroke-width:.8;
   opacity:0;
   transition:.4s;
-}
-
-/* ===== GLOW ===== */
-.glow{
-  animation:glow 2s infinite alternate;
-}
-@keyframes glow{
-  from{filter:drop-shadow(0 0 8px #ff5d8f)}
-  to{filter:drop-shadow(0 0 24px #ffb3c6)}
 }
 
 /* ===== RING ===== */
@@ -164,6 +160,14 @@ button{
   color:#ffe5ec;
   text-shadow:0 0 10px #ff5d8f,0 0 25px #ffb3c6;
   pointer-events:none;
+}
+
+/* ===== MOBILE UPSIZE ===== */
+@media (max-width:600px){
+  h2{font-size:3.2rem;}
+  text{font-size:8vw;}
+  #finalText{font-size:10vw;}
+  button{font-size:1.25rem;}
 }
 </style>
 </head>
@@ -244,9 +248,9 @@ btn.onclick=()=>{
   btn.disabled=true;
 
   music.currentTime=0;
-  music.play(); // 🎵 START MUSIC
+  music.play();
 
-  document.body.classList.add("valentine");
+  document.body.classList.add("valentine"); // ✅ banner shows here
   playStage();
 };
 
