@@ -47,10 +47,9 @@ body.valentine .banner{opacity:1}
 .banner span{
   display:inline-block;
   padding-left:100%;
-  animation:bannerMove 10s linear infinite;
+  animation:bannerMove 28s linear infinite;
 }
 @keyframes bannerMove{
-  from{transform:translateX(0)}
   to{transform:translateX(-100%)}
 }
 
@@ -84,7 +83,7 @@ body.valentine .heart{opacity:.35}
   overflow:hidden;
 }
 
-/* ===== FIREWORKS (INSIDE CARD) ===== */
+/* ===== FIREWORKS ===== */
 .firework{
   position:absolute;
   font-size:22px;
@@ -125,7 +124,7 @@ text{
   stroke-width:8;
   fill:none;
   stroke-dasharray:314;
-  stroke-dashoffset:314
+  stroke-dashoffset:314;
 }
 
 /* ===== BUTTON ===== */
@@ -143,6 +142,33 @@ button{
   font-size:1.1rem;
   position:relative;
   z-index:20;
+  overflow:hidden;
+}
+
+/* ⏳ SLOWED BUTTON ANIMATION */
+button.loading{
+  animation:buttonPulse 1.8s ease forwards;
+}
+@keyframes buttonPulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(0);opacity:0}
+}
+
+/* ===== HEART BURST (SLOWED) ===== */
+.burst{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:28px;
+  animation:burst 2.2s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes burst{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:1}
+  70%{opacity:.9}
+  100%{transform:translate(-50%,-140%) scale(2.4);opacity:0}
 }
 
 /* ===== FINAL TEXT ===== */
@@ -159,30 +185,19 @@ button{
   text-shadow:0 0 10px #ff5d8f,0 0 25px #ffb3c6;
   pointer-events:none;
 }
-
-/* ===== MOBILE UPSIZE ===== */
-@media (max-width:600px){
-  h2{font-size:3.6rem;}
-  text{font-size:10vw;}
-  #finalText{font-size:12vw;}
-  button{font-size:1.35rem;padding:16px 48px;}
-}
-
-@media (max-width:400px){
-  h2{font-size:4rem;}
-  text{font-size:12vw;}
-  #finalText{font-size:14vw;}
-}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 MUSIC -->
 <audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
 
 <div class="banner">
-  <span>💖 Just for you 💖 Just for you 💖 Just for you 💖</span>
+  <span>
+    💖 For You 💖
+    With Love 💖
+    Just For You 💖
+  </span>
 </div>
 
 <script>
@@ -235,6 +250,17 @@ const music=document.getElementById("bgMusic");
 
 let stage=0,i=0,progress=0,started=false;
 
+function heartBurst(){
+  for(let i=0;i<6;i++){
+    const b=document.createElement("div");
+    b.className="burst";
+    b.textContent="💖";
+    b.style.left=50+Math.random()*20-10+"%";
+    card.appendChild(b);
+    setTimeout(()=>b.remove(),2200);
+  }
+}
+
 function fireworks(){
   for(let k=0;k<8;k++){
     const f=document.createElement("div");
@@ -250,10 +276,16 @@ function fireworks(){
 btn.onclick=()=>{
   if(started) return;
   started=true;
-  btn.disabled=true;
-  music.play();
-  document.body.classList.add("valentine");
-  playStage();
+  btn.classList.add("loading");
+  heartBurst();
+
+  /* ⏳ SLOWER TRANSITION INTO MAIN SCENE */
+  setTimeout(()=>{
+    btn.style.display="none";
+    music.play();
+    document.body.classList.add("valentine");
+    playStage();
+  },2400);
 };
 
 function playStage(){
