@@ -5,7 +5,7 @@
 <title>Happy Valentine's Day</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;500&family=Parisienne&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -19,7 +19,7 @@ body{
   font-family:'Poppins',sans-serif;
   background:radial-gradient(circle at top,#0f0f14,#050507);
   overflow:hidden;
-  transition:background 2s ease;
+  transition:background 1.5s ease;
 }
 body.valentine{
   background:radial-gradient(circle at top,#ffb3c6,#590d22);
@@ -33,32 +33,30 @@ body.valentine{
   background:linear-gradient(90deg,#ff5d8f,#ffb3c6,#ff5d8f);
   color:#590d22;
   font-family:'Playfair Display',serif;
-  font-size:1.2rem;
-  letter-spacing:4px;
+  font-size:1.1rem;
+  letter-spacing:3px;
   padding:10px 0;
   text-align:center;
   white-space:nowrap;
   z-index:3;
   pointer-events:none;
   opacity:0;
-  transition:opacity .6s;
+  transition:opacity .5s;
 }
 body.valentine .banner{opacity:1}
 .banner span{
   display:inline-block;
   padding-left:100%;
-  animation:bannerMove 28s linear infinite;
+  animation:bannerMove 24s linear infinite;
 }
-@keyframes bannerMove{
-  to{transform:translateX(-100%)}
-}
+@keyframes bannerMove{to{transform:translateX(-100%)}}
 
 /* ===== FLOATING HEARTS ===== */
 .heart{
   position:fixed;
   font-size:18px;
   opacity:0;
-  animation:float 7s linear infinite;
+  animation:float 6s linear infinite;
   pointer-events:none;
   z-index:1;
 }
@@ -83,38 +81,25 @@ body.valentine .heart{opacity:.35}
   overflow:hidden;
 }
 
-/* ===== FIREWORKS ===== */
-.firework{
-  position:absolute;
-  font-size:22px;
-  animation:explode 1s ease-out forwards;
-  pointer-events:none;
-}
-@keyframes explode{
-  0%{transform:scale(0);opacity:1}
-  100%{transform:scale(2.5);opacity:0}
-}
-
 /* ===== HEADER ===== */
 h2{
-  font-family:'Parisienne',cursive;
-  font-size:2.6rem;
-  margin-bottom:12px;
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;
+  margin-bottom:14px;
   color:#ffd6e0;
-  transition:opacity .6s;
 }
 
-/* ===== CURVED TEXT ===== */
-svg{width:100%;max-height:180px;margin-bottom:10px}
+/* ===== CURVED TEXT (UPSIZED) ===== */
+svg{width:100%;max-height:190px;margin-bottom:10px}
 text{
   font-family:'Playfair Display',serif;
   font-weight:600;
-  font-size:5.5vw;
+  font-size:7vw;              /* ⬆️ bigger */
   fill:url(#loveGradient);
   stroke:#3a0a1a;
   stroke-width:.8;
   opacity:0;
-  transition:.4s;
+  transition:.3s;
 }
 
 /* ===== RING ===== */
@@ -139,51 +124,66 @@ button{
   font-weight:600;
   letter-spacing:3px;
   cursor:pointer;
-  font-size:1.1rem;
-  position:relative;
-  z-index:20;
-  overflow:hidden;
+  font-size:1.05rem;
 }
-
-/* ⏳ SLOWED BUTTON ANIMATION */
-button.loading{
-  animation:buttonPulse 1.8s ease forwards;
-}
+button.loading{animation:buttonPulse 1.2s ease forwards}
 @keyframes buttonPulse{
   0%{transform:scale(1)}
   50%{transform:scale(1.15)}
   100%{transform:scale(0);opacity:0}
 }
 
-/* ===== HEART BURST (SLOWED) ===== */
+/* ===== HEART BURST ===== */
 .burst{
   position:absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
   font-size:28px;
-  animation:burst 2.2s ease-out forwards;
+  animation:burst 1.4s ease-out forwards;
   pointer-events:none;
 }
 @keyframes burst{
   0%{transform:translate(-50%,-50%) scale(0);opacity:1}
-  70%{opacity:.9}
-  100%{transform:translate(-50%,-140%) scale(2.4);opacity:0}
+  100%{transform:translate(-50%,-130%) scale(2.2);opacity:0}
+}
+
+/* ===== FIREWORKS ===== */
+.firework{
+  position:absolute;
+  font-size:22px;
+  animation:explode .9s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes explode{
+  0%{transform:scale(0);opacity:1}
+  100%{transform:scale(2.3);opacity:0}
 }
 
 /* ===== FINAL TEXT ===== */
 #finalText{
   position:absolute;
-  top:18px;
+  top:20px;
   left:50%;
   transform:translateX(-50%);
-  font-family:'Parisienne',cursive;
-  font-size:6.5vw;
+  font-family:'Playfair Display',serif;
+  font-size:6vw;
   opacity:0;
   transition:opacity .8s;
   color:#ffe5ec;
-  text-shadow:0 0 10px #ff5d8f,0 0 25px #ffb3c6;
+  text-shadow:0 0 12px #ff5d8f,0 0 28px #ffb3c6;
   pointer-events:none;
+}
+#finalText span{
+  color:#fff;
+  text-shadow:0 0 10px #fff,0 0 25px #ff5d8f,0 0 45px #ffb3c6;
+}
+
+/* 📱 MOBILE UPSIZE */
+@media(max-width:480px){
+  h2{font-size:2.8rem}
+  text{font-size:9vw}        /* ⬆️ extra big on phones */
+  #finalText{font-size:8vw}
 }
 </style>
 </head>
@@ -193,11 +193,7 @@ button.loading{
 <audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
 
 <div class="banner">
-  <span>
-    💖 Every heartbeat of mine whispers your name. 💖
-    Loving you is my favorite thing to do. 💖
-    Happy Valentine's Day 💖
-  </span>
+  <span>💖 Every heartbeat of mine whispers your name 💖 Happy Valentine’s Day 💖</span>
 </div>
 
 <script>
@@ -206,7 +202,7 @@ for(let i=0;i<25;i++){
   h.className="heart";
   h.textContent="💖";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=5+Math.random()*5+"s";
+  h.style.animationDuration=4+Math.random()*4+"s";
   document.body.appendChild(h);
 }
 </script>
@@ -232,7 +228,8 @@ for(let i=0;i<25;i++){
   </svg>
 
   <button id="startBtn">OPEN 💘</button>
-  <div id="finalText">💞 Happy Valentine’s Day 💞</div>
+
+  <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
 </div>
 
 <script>
@@ -257,19 +254,19 @@ function heartBurst(){
     b.textContent="💖";
     b.style.left=50+Math.random()*20-10+"%";
     card.appendChild(b);
-    setTimeout(()=>b.remove(),2200);
+    setTimeout(()=>b.remove(),1400);
   }
 }
 
 function fireworks(){
-  for(let k=0;k<8;k++){
+  for(let i=0;i<8;i++){
     const f=document.createElement("div");
     f.className="firework";
     f.textContent="💖";
     f.style.left=Math.random()*100+"%";
     f.style.top=Math.random()*100+"%";
     card.appendChild(f);
-    setTimeout(()=>f.remove(),1000);
+    setTimeout(()=>f.remove(),900);
   }
 }
 
@@ -279,24 +276,24 @@ btn.onclick=()=>{
   btn.classList.add("loading");
   heartBurst();
 
-  /* ⏳ SLOWER TRANSITION INTO MAIN SCENE */
   setTimeout(()=>{
     btn.style.display="none";
     music.play();
     document.body.classList.add("valentine");
     playStage();
-  },2400);
+  },1500);
 };
 
 function playStage(){
   i=0; progress=0;
   textPath.textContent="";
+  ring.style.display="block";
   ring.style.strokeDashoffset=314;
   headerText.textContent=headers[stage];
   headerText.style.opacity=1;
 
   const interval=setInterval(()=>{
-    progress+=2;
+    progress+=3;
     ring.style.strokeDashoffset=314-(314*progress/100);
 
     if(i<messages[stage].length){
@@ -308,9 +305,9 @@ function playStage(){
       clearInterval(interval);
       fireworks();
       stage++;
-      setTimeout(stage===messages.length?showFinal:playStage,900);
+      setTimeout(stage===messages.length?showFinal:playStage,700);
     }
-  },25);
+  },20);
 }
 
 function showFinal(){
@@ -321,9 +318,8 @@ function showFinal(){
 
   setTimeout(()=>{
     finalText.style.opacity=0;
-    ring.style.display="block";
     stage=0;
-    playStage();
+    playStage();   // 🔁 infinite loop
   },3000);
 }
 </script>
