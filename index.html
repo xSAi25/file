@@ -81,20 +81,20 @@ body.valentine .heart{opacity:.35}
   overflow:hidden;
 }
 
-/* ===== HEADER ===== */
+/* ===== HEADER (DOWNSIZED) ===== */
 h2{
   font-family:'Playfair Display',serif;
-  font-size:2.4rem;
-  margin-bottom:14px;
+  font-size:2rem;
+  margin-bottom:12px;
   color:#ffd6e0;
 }
 
-/* ===== CURVED TEXT (UPSIZED) ===== */
+/* ===== CURVED TEXT ===== */
 svg{width:100%;max-height:190px;margin-bottom:10px}
 text{
   font-family:'Playfair Display',serif;
   font-weight:600;
-  font-size:7vw;              /* ⬆️ bigger */
+  font-size:7vw;
   fill:url(#loveGradient);
   stroke:#3a0a1a;
   stroke-width:.8;
@@ -179,11 +179,11 @@ button.loading{animation:buttonPulse 1.2s ease forwards}
   text-shadow:0 0 10px #fff,0 0 25px #ff5d8f,0 0 45px #ffb3c6;
 }
 
-/* 📱 MOBILE UPSIZE */
+/* 📱 MOBILE */
 @media(max-width:480px){
-  h2{font-size:2.8rem}
-  text{font-size:9vw}        /* ⬆️ extra big on phones */
-  #finalText{font-size:8vw}
+  h2{font-size:1.8rem}
+  text{font-size:11vw}
+  #finalText{font-size:8.5vw}
 }
 </style>
 </head>
@@ -319,7 +319,7 @@ function showFinal(){
   setTimeout(()=>{
     finalText.style.opacity=0;
     stage=0;
-    playStage();   // 🔁 infinite loop
+    playStage();
   },3000);
 }
 </script>
