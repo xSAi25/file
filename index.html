@@ -249,13 +249,14 @@ const music=document.getElementById("bgMusic");
 let stage=0,i=0,progress=0,started=false;
 
 function heartBurst(){
-  for(let i=0;i<6;i++){
-    const b=document.createElement("div");
-    b.className="burst";
-    b.textContent="💖";
-    b.style.left=50+Math.random()*20-10+"%";
-    card.appendChild(b);
-    setTimeout(()=>b.remove(),1400);
+  for(let i=0;i<8;i++){
+    const f=document.createElement("div");
+    f.className="burst";
+    f.textContent="🥰";
+    f.style.left=Math.random()*100+"%";
+    f.style.top=Math.random()*100+"%";
+    card.appendChild(f);
+    setTimeout(()=>f.remove(),900);
   }
 }
 
