@@ -25,6 +25,12 @@ body.valentine{
   background:radial-gradient(circle at top,#ffb3c6,#590d22);
 }
 
+/* 🔥 CLICK FIX */
+svg, text, .heart, .banner, .ring, #finalText {
+  pointer-events:none;
+}
+button, input { pointer-events:auto; }
+
 /* ===== BANNER ===== */
 .banner{
   position:fixed;
@@ -39,9 +45,8 @@ body.valentine{
   text-align:center;
   white-space:nowrap;
   z-index:3;
-  pointer-events:none;
   opacity:0;
-  transition:opacity .5s;
+  transition:.5s;
 }
 body.valentine .banner{opacity:1}
 .banner span{
@@ -57,7 +62,6 @@ body.valentine .banner{opacity:1}
   font-size:18px;
   opacity:0;
   animation:float 6s linear infinite;
-  pointer-events:none;
   z-index:1;
 }
 body.valentine .heart{opacity:.35}
@@ -78,10 +82,9 @@ body.valentine .heart{opacity:.35}
   color:#f3f3f3;
   position:relative;
   z-index:10;
-  overflow:hidden;
 }
 
-/* ===== HEADER (DOWNSIZED) ===== */
+/* ===== HEADER ===== */
 h2{
   font-family:'Playfair Display',serif;
   font-size:2rem;
@@ -125,6 +128,8 @@ button{
   letter-spacing:3px;
   cursor:pointer;
   font-size:1.05rem;
+  position:relative;
+  z-index:100;
 }
 button.loading{animation:buttonPulse 1.2s ease forwards}
 @keyframes buttonPulse{
@@ -133,7 +138,34 @@ button.loading{animation:buttonPulse 1.2s ease forwards}
   100%{transform:scale(0);opacity:0}
 }
 
-/* ===== HEART BURST ===== */
+/* ===== INPUT ===== */
+.inputBox{
+  margin-top:14px;
+  display:none;
+}
+.inputBox input{
+  padding:12px 18px;
+  border-radius:999px;
+  border:none;
+  width:70%;
+  text-align:center;
+}
+.inputBox p{
+  margin-top:6px;
+  font-size:.9rem;
+  color:#ffb3c6;
+  opacity:0;
+}
+.shake{animation:shake .4s}
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-6px)}
+  50%{transform:translateX(6px)}
+  75%{transform:translateX(-6px)}
+  100%{transform:translateX(0)}
+}
+
+/* ===== BURST ===== */
 .burst{
   position:absolute;
   left:50%;
@@ -141,26 +173,24 @@ button.loading{animation:buttonPulse 1.2s ease forwards}
   transform:translate(-50%,-50%);
   font-size:28px;
   animation:burst 1.4s ease-out forwards;
-  pointer-events:none;
 }
 @keyframes burst{
   0%{transform:translate(-50%,-50%) scale(0);opacity:1}
   100%{transform:translate(-50%,-130%) scale(2.2);opacity:0}
 }
 
-/* ===== FIREWORKS ===== */
+/* ===== FIREWORK ===== */
 .firework{
   position:absolute;
   font-size:22px;
   animation:explode .9s ease-out forwards;
-  pointer-events:none;
 }
 @keyframes explode{
   0%{transform:scale(0);opacity:1}
   100%{transform:scale(2.3);opacity:0}
 }
 
-/* ===== FINAL TEXT ===== */
+/* ===== FINAL ===== */
 #finalText{
   position:absolute;
   top:20px;
@@ -169,21 +199,13 @@ button.loading{animation:buttonPulse 1.2s ease forwards}
   font-family:'Playfair Display',serif;
   font-size:6vw;
   opacity:0;
-  transition:opacity .8s;
+  transition:.8s;
   color:#ffe5ec;
   text-shadow:0 0 12px #ff5d8f,0 0 28px #ffb3c6;
-  pointer-events:none;
 }
 #finalText span{
   color:#fff;
-  text-shadow:0 0 10px #fff,0 0 25px #ff5d8f,0 0 45px #ffb3c6;
-}
-
-/* 📱 MOBILE */
-@media(max-width:480px){
-  h2{font-size:1.8rem}
-  text{font-size:11vw}
-  #finalText{font-size:8.5vw}
+  text-shadow:0 0 10px #fff,0 0 25px #ff5d8f;
 }
 </style>
 </head>
@@ -209,7 +231,11 @@ for(let i=0;i<25;i++){
 
 <div class="card" id="card">
   <h2 id="headerText">Please Open This <br>📩</h2>
-    
+
+  <div class="inputBox" id="inputBox">
+    <input id="nameInput" placeholder="Enter your name">
+    <p id="errorMsg">This letter isn’t for you 💔</p>
+  </div>
 
   <svg viewBox="0 0 500 200">
     <defs>
@@ -229,7 +255,6 @@ for(let i=0;i<25;i++){
   </svg>
 
   <button id="startBtn">OPEN</button>
-
   <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
 </div>
 
@@ -239,6 +264,9 @@ const headers=["For You 💌","With Love 💖","Just for You 💝"];
 
 const btn=document.getElementById("startBtn");
 const card=document.getElementById("card");
+const inputBox=document.getElementById("inputBox");
+const nameInput=document.getElementById("nameInput");
+const errorMsg=document.getElementById("errorMsg");
 const textPath=document.querySelector("textPath");
 const textEl=document.getElementById("curvedText");
 const ring=document.querySelector(".progress");
@@ -246,17 +274,39 @@ const finalText=document.getElementById("finalText");
 const headerText=document.getElementById("headerText");
 const music=document.getElementById("bgMusic");
 
-let stage=0,i=0,progress=0,started=false;
+let stage=0,i=0,progress=0;
+
+btn.onclick=()=>{
+  btn.style.display="none";
+  inputBox.style.display="block";
+  nameInput.focus();
+};
+
+nameInput.addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+    if(nameInput.value.trim().toLowerCase()==="sam"){
+      inputBox.style.display="none";
+      music.play();
+      document.body.classList.add("valentine");
+      heartBurst();
+      playStage();
+    }else{
+      errorMsg.style.opacity=1;
+      inputBox.classList.add("shake");
+      setTimeout(()=>inputBox.classList.remove("shake"),400);
+    }
+  }
+});
 
 function heartBurst(){
   for(let i=0;i<8;i++){
-    const f=document.createElement("div");
-    f.className="burst";
-    f.textContent="🥰";
-    f.style.left=Math.random()*100+"%";
-    f.style.top=Math.random()*100+"%";
-    card.appendChild(f);
-    setTimeout(()=>f.remove(),900);
+    const b=document.createElement("div");
+    b.className="burst";
+    b.textContent="🥰";
+    b.style.left=Math.random()*100+"%";
+    b.style.top=Math.random()*100+"%";
+    card.appendChild(b);
+    setTimeout(()=>b.remove(),900);
   }
 }
 
@@ -272,22 +322,8 @@ function fireworks(){
   }
 }
 
-btn.onclick=()=>{
-  if(started) return;
-  started=true;
-  btn.classList.add("loading");
-  heartBurst();
-
-  setTimeout(()=>{
-    btn.style.display="none";
-    music.play();
-    document.body.classList.add("valentine");
-    playStage();
-  },1500);
-};
-
 function playStage(){
-  i=0; progress=0;
+  i=0;progress=0;
   textPath.textContent="";
   ring.style.display="block";
   ring.style.strokeDashoffset=314;
