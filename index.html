@@ -25,7 +25,7 @@ body.valentine{
   background:radial-gradient(circle at top,#ffb3c6,#590d22);
 }
 
-/* 🔥 CLICK FIX */
+/* CLICK FIX */
 svg, text, .heart, .banner, .ring, #finalText {
   pointer-events:none;
 }
@@ -165,6 +165,20 @@ button.loading{animation:buttonPulse 1.2s ease forwards}
   100%{transform:translateX(0)}
 }
 
+/* ===== VALENTINE QUESTION ===== */
+#valentineQuestion{
+  display:none;
+  margin-top:18px;
+}
+#valentineQuestion p{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;
+  color:#ffd6e0;
+}
+#valentineQuestion button:last-child{
+  background:linear-gradient(135deg,#999,#555);
+}
+
 /* ===== BURST ===== */
 .burst{
   position:absolute;
@@ -208,10 +222,9 @@ button.loading{animation:buttonPulse 1.2s ease forwards}
   text-shadow:0 0 10px #fff,0 0 25px #ff5d8f;
 }
 
-/* 📱 MOBILE ONLY — UPSIZED CURVE TEXT */
 @media(max-width:480px){
   h2{font-size:1.8rem}
-  text{font-size:15vw;}  /* 👈 BIGGER CURVED TEXT */
+  text{font-size:15vw;}
   #finalText{font-size:9.5vw}
 }
 </style>
@@ -242,6 +255,12 @@ for(let i=0;i<25;i++){
   <div class="inputBox" id="inputBox">
     <input id="nameInput" placeholder="Enter your name">
     <p id="errorMsg">This letter isn’t for you 💔</p>
+  </div>
+
+  <div id="valentineQuestion">
+    <p>Will you be my Valentine? 💘🥰</p>
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">NO 💔</button>
   </div>
 
   <svg viewBox="0 0 500 200">
@@ -281,6 +300,10 @@ const finalText=document.getElementById("finalText");
 const headerText=document.getElementById("headerText");
 const music=document.getElementById("bgMusic");
 
+const valentineQuestion=document.getElementById("valentineQuestion");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+
 let stage=0,i=0,progress=0;
 
 btn.onclick=()=>{
@@ -293,10 +316,7 @@ nameInput.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
     if(nameInput.value.trim().toLowerCase()==="sam"){
       inputBox.style.display="none";
-      music.play();
-      document.body.classList.add("valentine");
-      heartBurst();
-      playStage();
+      valentineQuestion.style.display="block";
     }else{
       errorMsg.style.opacity=1;
       inputBox.classList.add("shake");
@@ -304,6 +324,20 @@ nameInput.addEventListener("keydown",e=>{
     }
   }
 });
+
+yesBtn.onclick=()=>{
+  valentineQuestion.style.display="none";
+  music.play();
+  document.body.classList.add("valentine");
+  heartBurst();
+  playStage();
+};
+
+noBtn.onclick=()=>{
+  noBtn.textContent="Are you sure? 😢";
+  noBtn.classList.add("shake");
+  setTimeout(()=>noBtn.classList.remove("shake"),400);
+};
 
 function heartBurst(){
   for(let i=0;i<8;i++){
