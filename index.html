@@ -110,7 +110,7 @@ h2{
   100%{opacity:1;transform:scale(1)}
 }
 
-/* ===== CURVED TEXT ===== */
+/* ===== CURVED TEXT (SMALLER) ===== */
 svg{
   width:100%;
   height:auto;
@@ -120,7 +120,7 @@ svg{
 text{
   font-family:'Playfair Display',serif;
   font-weight:600;
-  font-size:7vw;
+  font-size:6vw; /* ← slightly smaller */
   fill:url(#loveGradient);
   stroke:#3a0a1a;
   stroke-width:.8;
@@ -249,7 +249,7 @@ button{
 /* ===== MOBILE ===== */
 @media(max-width:480px){
   h2{font-size:1.8rem}
-  text{font-size:20vw;stroke-width:1.2}
+  text{font-size:18vw;stroke-width:1.2}
   #finalText{font-size:9.5vw}
 }
 </style>
@@ -305,7 +305,6 @@ for(let i=0;i<25;i++){
     </text>
   </svg>
 
-  <!-- HEART PROGRESS -->
   <svg class="ring" viewBox="0 0 100 90">
     <path
       d="M50 80
