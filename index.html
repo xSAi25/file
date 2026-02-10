@@ -110,7 +110,7 @@ h2{
   100%{opacity:1;transform:scale(1)}
 }
 
-/* ===== CURVED TEXT (FIXED FIT) ===== */
+/* ===== CURVED TEXT ===== */
 svg{
   width:100%;
   height:auto;
@@ -128,14 +128,21 @@ text{
   transition:.3s;
 }
 
-/* ===== RING ===== */
-.ring{width:80px;height:80px;margin:12px auto}
+/* ===== HEART PROGRESS ===== */
+.ring{
+  width:90px;
+  height:80px;
+  margin:12px auto;
+}
 .progress{
   stroke:#ff5d8f;
-  stroke-width:8;
+  stroke-width:6;
   fill:none;
-  stroke-dasharray:314;
-  stroke-dashoffset:314;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:420;
+  stroke-dashoffset:420;
+  transition:stroke-dashoffset .2s linear;
 }
 
 /* ===== BUTTON ===== */
@@ -285,7 +292,7 @@ for(let i=0;i<25;i++){
     <button id="noBtn">NO 💔</button>
   </div>
 
-  <svg viewBox="0 0 500 260" preserveAspectRatio="xMidYMid meet">
+  <svg viewBox="0 0 500 260">
     <defs>
       <linearGradient id="loveGradient">
         <stop offset="0%" stop-color="#ff5d8f"/>
@@ -298,8 +305,15 @@ for(let i=0;i<25;i++){
     </text>
   </svg>
 
-  <svg class="ring">
-    <circle cx="60" cy="60" r="50" class="progress"/>
+  <!-- HEART PROGRESS -->
+  <svg class="ring" viewBox="0 0 100 90">
+    <path
+      d="M50 80
+         C20 60, 0 40, 25 20
+         C40 5, 50 25, 50 25
+         C50 25, 60 5, 75 20
+         C100 40, 80 60, 50 80"
+      class="progress"/>
   </svg>
 
   <button id="startBtn">OPEN</button>
@@ -341,7 +355,6 @@ nameInput.addEventListener("keydown",e=>{
       nameEffect.style.display="block";
       document.body.classList.add("nameAccepted");
       heartBurst();
-
       setTimeout(()=>{
         nameEffect.style.display="none";
         document.body.classList.remove("nameAccepted");
@@ -397,13 +410,13 @@ function playStage(){
   i=0;progress=0;
   textPath.textContent="";
   ring.style.display="block";
-  ring.style.strokeDashoffset=314;
+  ring.style.strokeDashoffset=420;
   headerText.textContent=headers[stage];
   headerText.style.opacity=1;
 
   const interval=setInterval(()=>{
     progress+=3;
-    ring.style.strokeDashoffset=314-(314*progress/100);
+    ring.style.strokeDashoffset=420-(420*progress/100);
 
     if(i<messages[stage].length){
       textPath.textContent+=messages[stage][i++];
