@@ -287,9 +287,11 @@ for(let i=0;i<25;i++){
   </div>
 
   <div id="valentineQuestion">
-    <p>Will you be my Valentine? 💘🥰</p>
-    <button id="yesBtn">YES 💖</button>
-    <button id="noBtn">NO 💔</button>
+    <p>I made this little page just to ask you something.💘🥰<br><br>
+      No pressure at all — I just thought I’d try in a creative way. <br><br>
+      Would you like to go out with me this Valentine’s Day? 💐</p>
+    <button id="yesBtn">Yes, I’d like that💖</button>
+    <button id="noBtn">No...</button>
   </div>
 
   <svg viewBox="0 0 500 260">
@@ -376,7 +378,7 @@ yesBtn.onclick=()=>{
 };
 
 noBtn.onclick=()=>{
-  noBtn.textContent="Are you sure? 😢";
+  noBtn.textContent="but thank you for asking 🤍";
   noBtn.classList.add("shake");
   setTimeout(()=>noBtn.classList.remove("shake"),400);
 };
