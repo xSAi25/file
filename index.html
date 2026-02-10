@@ -24,6 +24,9 @@ body{
 body.valentine{
   background:radial-gradient(circle at top,#ffb3c6,#590d22);
 }
+body.nameAccepted{
+  background:radial-gradient(circle at center,#ff8fab,#590d22);
+}
 
 /* CLICK FIX */
 svg, text, .heart, .banner, .ring, #finalText {
@@ -92,6 +95,21 @@ h2{
   color:#ffd6e0;
 }
 
+/* ===== NAME EFFECT ===== */
+#nameEffect{
+  display:none;
+  margin-top:18px;
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;
+  color:#ffd6e0;
+  animation:fadeGlow 1.8s ease forwards;
+}
+@keyframes fadeGlow{
+  0%{opacity:0;transform:scale(.9)}
+  50%{opacity:1;transform:scale(1.05)}
+  100%{opacity:1;transform:scale(1)}
+}
+
 /* ===== CURVED TEXT ===== */
 svg{width:100%;max-height:190px;margin-bottom:10px}
 text{
@@ -130,12 +148,6 @@ button{
   font-size:1.05rem;
   position:relative;
   z-index:100;
-}
-button.loading{animation:buttonPulse 1.2s ease forwards}
-@keyframes buttonPulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.15)}
-  100%{transform:scale(0);opacity:0}
 }
 
 /* ===== INPUT ===== */
@@ -221,12 +233,6 @@ button.loading{animation:buttonPulse 1.2s ease forwards}
   color:#fff;
   text-shadow:0 0 10px #fff,0 0 25px #ff5d8f;
 }
-
-@media(max-width:480px){
-  h2{font-size:1.8rem}
-  text{font-size:15vw;}
-  #finalText{font-size:9.5vw}
-}
 </style>
 </head>
 
@@ -255,6 +261,10 @@ for(let i=0;i<25;i++){
   <div class="inputBox" id="inputBox">
     <input id="nameInput" placeholder="Enter your name">
     <p id="errorMsg">This letter isn’t for you 💔</p>
+  </div>
+
+  <div id="nameEffect">
+    <p>Recognizing your heart… 💞</p>
   </div>
 
   <div id="valentineQuestion">
@@ -289,7 +299,6 @@ const messages=["HAPPY","VALENTINE’S","DAY 💖"];
 const headers=["For You 💌","With Love 💖","Just for You 💝"];
 
 const btn=document.getElementById("startBtn");
-const card=document.getElementById("card");
 const inputBox=document.getElementById("inputBox");
 const nameInput=document.getElementById("nameInput");
 const errorMsg=document.getElementById("errorMsg");
@@ -300,6 +309,7 @@ const finalText=document.getElementById("finalText");
 const headerText=document.getElementById("headerText");
 const music=document.getElementById("bgMusic");
 
+const nameEffect=document.getElementById("nameEffect");
 const valentineQuestion=document.getElementById("valentineQuestion");
 const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
@@ -316,7 +326,15 @@ nameInput.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
     if(nameInput.value.trim().toLowerCase()==="sam"){
       inputBox.style.display="none";
-      valentineQuestion.style.display="block";
+      nameEffect.style.display="block";
+      document.body.classList.add("nameAccepted");
+      heartBurst();
+
+      setTimeout(()=>{
+        nameEffect.style.display="none";
+        document.body.classList.remove("nameAccepted");
+        valentineQuestion.style.display="block";
+      },1800);
     }else{
       errorMsg.style.opacity=1;
       inputBox.classList.add("shake");
@@ -346,7 +364,7 @@ function heartBurst(){
     b.textContent="🥰";
     b.style.left=Math.random()*100+"%";
     b.style.top=Math.random()*100+"%";
-    card.appendChild(b);
+    document.getElementById("card").appendChild(b);
     setTimeout(()=>b.remove(),900);
   }
 }
@@ -358,7 +376,7 @@ function fireworks(){
     f.textContent="💖";
     f.style.left=Math.random()*100+"%";
     f.style.top=Math.random()*100+"%";
-    card.appendChild(f);
+    document.getElementById("card").appendChild(f);
     setTimeout(()=>f.remove(),900);
   }
 }
