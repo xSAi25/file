@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Open it, please… I made this just for you.</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS zoom fix applied -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
@@ -120,7 +121,7 @@ svg{
 text{
   font-family:'Playfair Display',serif;
   font-weight:600;
-  font-size:6vw;
+  font-size:6vw; /* ← slightly smaller */
   fill:url(#loveGradient);
   stroke:#3a0a1a;
   stroke-width:.8;
@@ -162,7 +163,7 @@ button{
   z-index:100;
 }
 
-/* ===== INPUT (ONLY ADDITION IS font-size:16px) ===== */
+/* ===== INPUT ===== */
 .inputBox{
   margin-top:14px;
   display:none;
@@ -173,7 +174,6 @@ button{
   border:none;
   width:70%;
   text-align:center;
-  font-size:16px; /* prevents iPhone zoom */
 }
 .inputBox p{
   margin-top:6px;
@@ -322,9 +322,6 @@ for(let i=0;i<25;i++){
   <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
 </div>
 
-<!-- ALL YOUR ORIGINAL SCRIPTS REMAIN EXACTLY THE SAME BELOW -->
-
-
 <script>
 const messages=["HAPPY","VALENTINE’S","DAY 💖"];
 const headers=["For You 💌","With Love 💖","Just for You 💝"];
@@ -347,11 +344,7 @@ const noBtn=document.getElementById("noBtn");
 
 let stage=0,i=0,progress=0;
 
-btn.onclick=()=>{
-  btn.style.display="none";
-  inputBox.style.display="block";
-  nameInput.focus();
-};
+btn.onclick=()=>{ btn.style.display="none"; inputBox.style.display="block"; nameInput.focus(); };
 
 nameInput.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
@@ -450,26 +443,25 @@ function showFinal(){
   },3000);
 }
 </script>
+
 <script>
 // ================== STEP 4: Function to Save to Google Sheet ==================
 function saveToSheet(answer){
-  fetch("https://script.google.com/macros/s/AKfycbx3PtSp9QS3kZx1zOpOnKA-ahyzbRWQIYHm-trv8wTXlY3IFZU-CcPTAmIQrTc9IM2pOw/exec", {  // <- replace this with your Web App URL
+  fetch("https://script.google.com/macros/s/AKfycbx3PtSp9QS3kZx1zOpOnKA-ahyzbRWQIYHm-trv8wTXlY3IFZU-CcPTAmIQrTc9IM2pOw/exec", {
     method: "POST",
     mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      name: nameInput.value.trim(),      // grabs name from input field
-      response: answer,                  // YES 💖 or NO 💔
-      time: new Date().toLocaleString()  // local time
+      name: nameInput.value.trim(),
+      response: answer,
+      time: new Date().toLocaleString()
     })
   });
 }
 
 // ================== STEP 5: Update YES/NO Button Actions ==================
 yesBtn.onclick = () => {
-  saveToSheet("YES 💖");               // save YES response
+  saveToSheet("YES 💖");
   valentineQuestion.style.display = "none";
   music.play();
   document.body.classList.add("valentine");
@@ -478,7 +470,7 @@ yesBtn.onclick = () => {
 };
 
 noBtn.onclick = () => {
-  saveToSheet("NO 💔");                // save NO response
+  saveToSheet("NO 💔");
   noBtn.textContent = "but thank you for asking 🤍";
   noBtn.classList.add("shake");
   setTimeout(() => noBtn.classList.remove("shake"), 400);
