@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Open it, please… I made this just for you.</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
@@ -165,6 +165,7 @@ button{
   border:none;
   width:80%;
   text-align:center;
+  font-size:16px; /* Prevent iOS zoom */
 }
 .inputBox p{
   margin-top:6px;
@@ -356,6 +357,14 @@ btn.onclick=()=>{
   inputBox.style.display="block";
   nameInput.focus();
 };
+
+// Prevent mobile zoom on input (iOS)
+nameInput.addEventListener("focus", () => {
+  document.getElementById("card").style.transform = "scale(1)";
+});
+nameInput.addEventListener("blur", () => {
+  document.getElementById("card").style.transform = "scale(1)";
+});
 
 nameInput.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
