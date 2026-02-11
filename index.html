@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Open it, please… I made this just for you.</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 
@@ -12,7 +12,7 @@
 
 /* ===== BODY ===== */
 body{
-  min-height:100vh;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -42,9 +42,9 @@ button, input { pointer-events:auto; }
   background:linear-gradient(90deg,#ff5d8f,#ffb3c6,#ff5d8f);
   color:#590d22;
   font-family:'Playfair Display',serif;
-  font-size:1rem;
-  letter-spacing:2px;
-  padding:8px 0;
+  font-size:1.1rem;
+  letter-spacing:3px;
+  padding:10px 0;
   text-align:center;
   white-space:nowrap;
   z-index:3;
@@ -55,14 +55,14 @@ body.valentine .banner{opacity:1}
 .banner span{
   display:inline-block;
   padding-left:100%;
-  animation:bannerMove 22s linear infinite;
+  animation:bannerMove 24s linear infinite;
 }
 @keyframes bannerMove{to{transform:translateX(-100%)}}
 
 /* ===== FLOATING HEARTS ===== */
 .heart{
   position:fixed;
-  font-size:16px;
+  font-size:18px;
   opacity:0;
   animation:float 6s linear infinite;
   z-index:1;
@@ -75,12 +75,12 @@ body.valentine .heart{opacity:.35}
 
 /* ===== CARD ===== */
 .card{
-  width:92%;
-  max-width:520px;
+  width:90%;
+  max-width:500px;
   background:rgba(15,15,25,.65);
   backdrop-filter:blur(20px);
-  border-radius:32px;
-  padding:32px 18px 26px;
+  border-radius:36px;
+  padding:40px 20px 30px;
   text-align:center;
   color:#f3f3f3;
   position:relative;
@@ -90,86 +90,93 @@ body.valentine .heart{opacity:.35}
 /* ===== HEADER ===== */
 h2{
   font-family:'Playfair Display',serif;
-  font-size:1.8rem;
-  margin-bottom:10px;
+  font-size:2rem;
+  margin-bottom:12px;
   color:#ffd6e0;
 }
 
 /* ===== NAME EFFECT ===== */
 #nameEffect{
   display:none;
-  margin-top:16px;
+  margin-top:18px;
   font-family:'Playfair Display',serif;
-  font-size:1.15rem;
+  font-size:1.3rem;
   color:#ffd6e0;
+  animation:fadeGlow 1.8s ease forwards;
+}
+@keyframes fadeGlow{
+  0%{opacity:0;transform:scale(.9)}
+  50%{opacity:1;transform:scale(1.05)}
+  100%{opacity:1;transform:scale(1)}
 }
 
-/* ===== CURVED TEXT ===== */
+/* ===== CURVED TEXT (SMALLER) ===== */
 svg{
   width:100%;
-  margin-bottom:6px;
+  height:auto;
+  overflow:visible;
+  margin-bottom:10px;
 }
 text{
   font-family:'Playfair Display',serif;
   font-weight:600;
-  font-size:6vw;
+  font-size:6vw; /* ← slightly smaller */
   fill:url(#loveGradient);
   stroke:#3a0a1a;
-  stroke-width:.7;
+  stroke-width:.8;
   opacity:0;
-}
-@media (max-width:768px){
-  text{font-size:7.5vw;}
-}
-@media (max-width:420px){
-  text{font-size:8.5vw;}
+  transition:.3s;
 }
 
 /* ===== HEART PROGRESS ===== */
 .ring{
-  width:76px;
-  height:70px;
-  margin:8px auto;
+  width:90px;
+  height:80px;
+  margin:12px auto;
 }
 .progress{
   stroke:#ff5d8f;
-  stroke-width:5;
+  stroke-width:6;
   fill:none;
   stroke-linecap:round;
+  stroke-linejoin:round;
   stroke-dasharray:420;
   stroke-dashoffset:420;
+  transition:stroke-dashoffset .2s linear;
 }
 
 /* ===== BUTTON ===== */
 button{
   margin-top:10px;
-  padding:13px 34px;
+  padding:14px 44px;
   border-radius:999px;
   border:none;
   font-family:'Playfair Display',serif;
   background:linear-gradient(135deg,#5dbeff,#182ac9);
   color:#fff;
-  letter-spacing:2px;
+  font-weight:600;
+  letter-spacing:3px;
   cursor:pointer;
-  font-size:1rem;
+  font-size:1.05rem;
+  position:relative;
+  z-index:100;
 }
 
 /* ===== INPUT ===== */
 .inputBox{
-  margin-top:12px;
+  margin-top:14px;
   display:none;
 }
 .inputBox input{
-  padding:11px 16px;
+  padding:12px 18px;
   border-radius:999px;
   border:none;
-  width:80%;
+  width:70%;
   text-align:center;
-  font-size:16px; /* Prevent iOS zoom */
 }
 .inputBox p{
   margin-top:6px;
-  font-size:.85rem;
+  font-size:.9rem;
   color:#ffb3c6;
   opacity:0;
 }
@@ -185,13 +192,15 @@ button{
 /* ===== VALENTINE QUESTION ===== */
 #valentineQuestion{
   display:none;
-  margin-top:16px;
+  margin-top:18px;
 }
 #valentineQuestion p{
   font-family:'Playfair Display',serif;
-  font-size:1.05rem;
-  line-height:1.6;
+  font-size:1.4rem;
   color:#ffd6e0;
+}
+#valentineQuestion button:last-child{
+  background:linear-gradient(135deg,#999,#555);
 }
 
 /* ===== BURST ===== */
@@ -200,69 +209,48 @@ button{
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
-  font-size:26px;
-  animation:burst 1.2s ease-out forwards;
+  font-size:28px;
+  animation:burst 1.4s ease-out forwards;
 }
 @keyframes burst{
-  from{transform:translate(-50%,-50%) scale(0);opacity:1}
-  to{transform:translate(-50%,-120%) scale(2);opacity:0}
+  0%{transform:translate(-50%,-50%) scale(0);opacity:1}
+  100%{transform:translate(-50%,-130%) scale(2.2);opacity:0}
 }
 
-/* ===== FIREWORKS ===== */
+/* ===== FIREWORK ===== */
 .firework{
   position:absolute;
-  left:50%;
-  top:50%;
-  font-size:20px;
-  transform:translate(-50%,-50%);
-  animation:firework 1s ease-out forwards;
+  font-size:22px;
+  animation:explode .9s ease-out forwards;
 }
-@keyframes firework{
-  0%{transform:translate(-50%,-50%) scale(.2);opacity:1}
-  100%{
-    transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.8);
-    opacity:0;
-  }
+@keyframes explode{
+  0%{transform:scale(0);opacity:1}
+  100%{transform:scale(2.3);opacity:0}
 }
 
 /* ===== FINAL ===== */
 #finalText{
   position:absolute;
-  top:16px;
+  top:20px;
   left:50%;
   transform:translateX(-50%);
   font-family:'Playfair Display',serif;
-  font-size:7vw;
+  font-size:6vw;
   opacity:0;
   transition:.8s;
   color:#ffe5ec;
+  text-shadow:0 0 12px #ff5d8f,0 0 28px #ffb3c6;
 }
-
-/* ===== ONLY ADDED GLOW EFFECTS ===== */
-
-/* Red glow on curved HAPPY VALENTINE’S DAY */
-#curvedText{
-  filter:
-    drop-shadow(0 0 6px #ff2e63)
-    drop-shadow(0 0 12px #ff5d8f)
-    drop-shadow(0 0 22px rgba(255,93,143,.8));
-}
-
-/* Red glow on final Happy Valentine’s Day */
-#finalText{
-  text-shadow:
-    0 0 6px rgba(255,60,120,.9),
-    0 0 14px rgba(255,93,143,.8),
-    0 0 24px rgba(255,93,143,.6);
-}
-
-/* White glow only on Sam */
 #finalText span{
   color:#fff;
-  text-shadow:
-    0 0 6px rgba(255,255,255,.95),
-    0 0 12px rgba(255,255,255,.8),
-    0 0 22px rgba(255,255,255,.6);
+  text-shadow:0 0 10px #fff,0 0 25px #ff5d8f;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:480px){
+  h2{font-size:1.8rem}
+  text{font-size:18vw;stroke-width:1.2}
+  #finalText{font-size:9.5vw}
 }
 </style>
 </head>
@@ -276,7 +264,7 @@ button{
 </div>
 
 <script>
-for(let i=0;i<22;i++){
+for(let i=0;i<25;i++){
   const h=document.createElement("div");
   h.className="heart";
   h.textContent="💖";
@@ -299,12 +287,10 @@ for(let i=0;i<22;i++){
   </div>
 
   <div id="valentineQuestion">
-    <p>
-      I made this little page just to ask you something. 💘🥰<br><br>
+    <p>I made this little page just to ask you something.💘🥰<br><br>
       No pressure at all — I just thought I’d try in a creative way.<br><br>
-      Would you like to go out with me this Valentine’s Day? 💐
-    </p>
-    <button id="yesBtn">Yes, I’d love to 💖</button>
+      Would you like to go out with me this Valentine’s Day? 💐</p>
+    <button id="yesBtn">Yes, I’d like that💖</button>
     <button id="noBtn">No...</button>
   </div>
 
@@ -322,11 +308,16 @@ for(let i=0;i<22;i++){
   </svg>
 
   <svg class="ring" viewBox="0 0 100 90">
-    <path d="M50 80 C20 60,0 40,25 20 C40 5,50 25,50 25 C50 25,60 5,75 20 C100 40,80 60,50 80" class="progress"/>
+    <path
+      d="M50 80
+         C20 60, 0 40, 25 20
+         C40 5, 50 25, 50 25
+         C50 25, 60 5, 75 20
+         C100 40, 80 60, 50 80"
+      class="progress"/>
   </svg>
 
   <button id="startBtn">OPEN</button>
-
   <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
 </div>
 
@@ -357,14 +348,6 @@ btn.onclick=()=>{
   inputBox.style.display="block";
   nameInput.focus();
 };
-
-// Prevent mobile zoom on input (iOS)
-nameInput.addEventListener("focus", () => {
-  document.getElementById("card").style.transform = "scale(1)";
-});
-nameInput.addEventListener("blur", () => {
-  document.getElementById("card").style.transform = "scale(1)";
-});
 
 nameInput.addEventListener("keydown",e=>{
   if(e.key==="Enter"){
@@ -413,14 +396,14 @@ function heartBurst(){
 }
 
 function fireworks(){
-  for(let i=0;i<14;i++){
+  for(let i=0;i<8;i++){
     const f=document.createElement("div");
     f.className="firework";
     f.textContent="💖";
-    f.style.setProperty("--x",(Math.random()*200-100)+"px");
-    f.style.setProperty("--y",(Math.random()*200-100)+"px");
+    f.style.left=Math.random()*100+"%";
+    f.style.top=Math.random()*100+"%";
     document.getElementById("card").appendChild(f);
-    setTimeout(()=>f.remove(),1000);
+    setTimeout(()=>f.remove(),900);
   }
 }
 
@@ -462,6 +445,40 @@ function showFinal(){
     playStage();
   },3000);
 }
+</script>
+<script>
+// ================== STEP 4: Function to Save to Google Sheet ==================
+function saveToSheet(answer){
+  fetch("https://script.google.com/macros/s/AKfycbx3PtSp9QS3kZx1zOpOnKA-ahyzbRWQIYHm-trv8wTXlY3IFZU-CcPTAmIQrTc9IM2pOw/exec", {  // <- replace this with your Web App URL
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: nameInput.value.trim(),      // grabs name from input field
+      response: answer,                  // YES 💖 or NO 💔
+      time: new Date().toLocaleString()  // local time
+    })
+  });
+}
+
+// ================== STEP 5: Update YES/NO Button Actions ==================
+yesBtn.onclick = () => {
+  saveToSheet("YES 💖");               // save YES response
+  valentineQuestion.style.display = "none";
+  music.play();
+  document.body.classList.add("valentine");
+  heartBurst();
+  playStage();
+};
+
+noBtn.onclick = () => {
+  saveToSheet("NO 💔");                // save NO response
+  noBtn.textContent = "but thank you for asking 🤍";
+  noBtn.classList.add("shake");
+  setTimeout(() => noBtn.classList.remove("shake"), 400);
+};
 </script>
 
 </body>
