@@ -120,7 +120,7 @@ svg{
 text{
   font-family:'Playfair Display',serif;
   font-weight:600;
-  font-size:6vw; /* ← slightly smaller */
+  font-size:6vw;
   fill:url(#loveGradient);
   stroke:#3a0a1a;
   stroke-width:.8;
@@ -162,7 +162,7 @@ button{
   z-index:100;
 }
 
-/* ===== INPUT ===== */
+/* ===== INPUT (ONLY ADDITION IS font-size:16px) ===== */
 .inputBox{
   margin-top:14px;
   display:none;
@@ -173,6 +173,7 @@ button{
   border:none;
   width:70%;
   text-align:center;
+  font-size:16px; /* prevents iPhone zoom */
 }
 .inputBox p{
   margin-top:6px;
@@ -320,6 +321,9 @@ for(let i=0;i<25;i++){
   <button id="startBtn">OPEN</button>
   <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
 </div>
+
+<!-- ALL YOUR ORIGINAL SCRIPTS REMAIN EXACTLY THE SAME BELOW -->
+
 
 <script>
 const messages=["HAPPY","VALENTINE’S","DAY 💖"];
