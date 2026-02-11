@@ -118,6 +118,12 @@ text{
   stroke-width:.7;
   opacity:0;
 }
+@media (max-width:768px){
+  text{font-size:7.5vw;}
+}
+@media (max-width:420px){
+  text{font-size:8.5vw;}
+}
 
 /* ===== HEART PROGRESS ===== */
 .ring{
@@ -187,7 +193,7 @@ button{
   color:#ffd6e0;
 }
 
-/* ===== BURST (HEARTS) ===== */
+/* ===== BURST ===== */
 .burst{
   position:absolute;
   left:50%;
@@ -201,7 +207,7 @@ button{
   to{transform:translate(-50%,-120%) scale(2);opacity:0}
 }
 
-/* ===== FIXED FIREWORKS ===== */
+/* ===== FIREWORKS ===== */
 .firework{
   position:absolute;
   left:50%;
@@ -210,17 +216,10 @@ button{
   transform:translate(-50%,-50%);
   animation:firework 1s ease-out forwards;
 }
-
 @keyframes firework{
-  0%{
-    transform:translate(-50%,-50%) scale(.2);
-    opacity:1;
-  }
+  0%{transform:translate(-50%,-50%) scale(.2);opacity:1}
   100%{
-    transform:translate(
-      calc(-50% + var(--x)),
-      calc(-50% + var(--y))
-    ) scale(1.8);
+    transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.8);
     opacity:0;
   }
 }
@@ -236,6 +235,33 @@ button{
   opacity:0;
   transition:.8s;
   color:#ffe5ec;
+}
+
+/* ===== ONLY ADDED GLOW EFFECTS ===== */
+
+/* Red glow on curved HAPPY VALENTINE’S DAY */
+#curvedText{
+  filter:
+    drop-shadow(0 0 6px #ff2e63)
+    drop-shadow(0 0 12px #ff5d8f)
+    drop-shadow(0 0 22px rgba(255,93,143,.8));
+}
+
+/* Red glow on final Happy Valentine’s Day */
+#finalText{
+  text-shadow:
+    0 0 6px rgba(255,60,120,.9),
+    0 0 14px rgba(255,93,143,.8),
+    0 0 24px rgba(255,93,143,.6);
+}
+
+/* White glow only on Sam */
+#finalText span{
+  color:#fff;
+  text-shadow:
+    0 0 6px rgba(255,255,255,.95),
+    0 0 12px rgba(255,255,255,.8),
+    0 0 22px rgba(255,255,255,.6);
 }
 </style>
 </head>
@@ -299,6 +325,7 @@ for(let i=0;i<22;i++){
   </svg>
 
   <button id="startBtn">OPEN</button>
+
   <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
 </div>
 
