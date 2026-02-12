@@ -1,709 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Open it, please… I made this just for you.</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Sam ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff0f3;
+            font-family: 'Fredoka', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
 
+        /* --- MOVING BANNER --- */
+        .banner-wrapper {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: #d00000; color: white;
+            overflow: hidden; padding: 10px 0; z-index: 100;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+        .banner-text {
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 1.2rem;
+            font-weight: 600;
+            animation: scroll-banner 20s linear infinite;
+        }
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+        @keyframes scroll-banner {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
 
-/* ===== BODY ===== */
-body{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,#0f0f14,#050507);
-  overflow:hidden;
-  transition:background 1.5s ease;
-}
-body.valentine{
-  background:radial-gradient(circle at top,#ffb3c6,#590d22);
-}
-body.nameAccepted{
-  background:radial-gradient(circle at center,#ff8fab,#590d22);
-}
+        .rain-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
 
-/* CLICK FIX */
-svg, text, .heart, .banner, .ring, #finalText {
-  pointer-events:none;
-}
-button, input { pointer-events:auto; }
+        .drop {
+            position: absolute; top: -50px; font-size: 1.5rem;
+            animation: fall linear infinite;
+        }
 
-/* ===== BANNER ===== */
-.banner{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:linear-gradient(90deg,#ff5d8f,#ffb3c6,#ff5d8f);
-  color:#590d22;
-  font-family:'Playfair Display',serif;
-  font-size:1rem;
-  letter-spacing:2px;
-  padding:8px 0;
-  text-align:center;
-  white-space:nowrap;
-  z-index:3;
-  opacity:0;
-  transition:.5s;
-}
-body.valentine .banner{opacity:1}
-.banner span{
-  display:inline-block;
-  padding-left:100%;
-  animation:bannerMove 22s linear infinite;
-}
-@keyframes bannerMove{to{transform:translateX(-100%)}}
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
 
-/* ===== FLOATING HEARTS ===== */
-.heart{
-  position:fixed;
-  font-size:16px;
-  opacity:0;
-  animation:float 6s linear infinite;
-  z-index:1;
-}
-body.valentine .heart{opacity:.35}
-@keyframes float{
-  from{transform:translateY(100vh)}
-  to{transform:translateY(-20vh)}
-}
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 35px;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(208, 0, 0, 0.15);
+            max-width: 420px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            border: 3px solid #ffccd5;
+        }
 
-/* ===== CARD ===== */
-.card{
-  width:92%;
-  max-width:520px;
-  background:rgba(15,15,25,.65);
-  backdrop-filter:blur(20px);
-  border-radius:32px;
-  padding:32px 18px 26px;
-  text-align:center;
-  color:#f3f3f3;
-  position:relative;
-  z-index:10;
-}
+        input {
+            width: 85%;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 3px solid #ffccd5;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Fredoka', sans-serif;
+            color: #d00000;
+            background-color: #fffafb;
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
 
-/* ===== HEADER ===== */
-h2{
-  font-family:'Playfair Display',serif;
-  font-size:1.8rem;
-  margin-bottom:10px;
-  color:#ffd6e0;
-}
+        input:focus {
+            border-color: #ff4d6d;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+            background-color: #ffffff;
+        }
 
-/* ===== NAME EFFECT ===== */
-#nameEffect{
-  display:none;
-  margin-top:16px;
-  font-family:'Playfair Display',serif;
-  font-size:1.15rem;
-  color:#ffd6e0;
-}
+        #curvedTextContainer {
+            width: 100%;
+            height: 160px;
+            margin-bottom: -15px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
 
-/* ===== CURVED TEXT ===== */
-svg{
-  width:100%;
-  margin-bottom:6px;
-}
-text{
-  font-family:'Playfair Display',serif;
-  font-weight:600;
-  font-size:6vw;
-  fill:url(#loveGradient);
-  stroke:#3a0a1a;
-  stroke-width:.7;
-  opacity:0;
-}
-@media (max-width:768px){
-  text{font-size:7.5vw;}
-}
-@media (max-width:420px){
-  text{font-size:8.5vw;}
-}
+        .curved-text-svg {
+            width: 100%;
+            height: 100%;
+            fill: #ffffff;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 20px; 
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 10px #d00000);
+        }
 
-/* ===== HEART PROGRESS ===== */
-.ring{
-  width:76px;
-  height:70px;
-  margin:8px auto;
-}
-.progress{
-  stroke:#ff5d8f;
-  stroke-width:5;
-  fill:none;
-  stroke-linecap:round;
-  stroke-dasharray:420;
-  stroke-dashoffset:420;
-}
+        .heart-btn-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-/* ===== BUTTON ===== */
-button{
-  margin-top:10px;
-  padding:13px 34px;
-  border-radius:999px;
-  border:none;
-  font-family:'Playfair Display',serif;
-  background:linear-gradient(135deg,#5dbeff,#182ac9);
-  color:#fff;
-  letter-spacing:2px;
-  cursor:pointer;
-  font-size:1rem;
-}
+        .heart-icon {
+            font-size: 8rem;
+            color: #d00000;
+            animation: pulse 1.5s infinite;
+        }
 
-/* ===== INPUT ===== */
-.inputBox{
-  margin-top:12px;
-  display:none;
-}
-.inputBox input{
-  padding:11px 16px;
-  border-radius:999px;
-  border:none;
-  width:80%;
-  text-align:center;
-  font-size:16px; /* Prevent iOS zoom */
-}
-.inputBox p{
-  margin-top:6px;
-  font-size:.85rem;
-  color:#ffb3c6;
-  opacity:0;
-}
-.shake{animation:shake .4s}
-@keyframes shake{
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-6px)}
-  50%{transform:translateX(6px)}
-  75%{transform:translateX(-6px)}
-  100%{transform:translateX(0)}
-}
+        .heart-overlay-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%; color: white;
+            font-size: 0.75rem; font-weight: bold;
+            line-height: 1.1; pointer-events: none;
+            text-transform: uppercase;
+        }
 
-/* ===== VALENTINE QUESTION ===== */
-#valentineQuestion{
-  display:none;
-  margin-top:16px;
-}
-#valentineQuestion p{
-  font-family:'Playfair Display',serif;
-  font-size:1.05rem;
-  line-height:1.6;
-  color:#ffd6e0;
-}
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
 
-/* ===== BURST ===== */
-.burst{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  font-size:26px;
-  animation:burst 1.2s ease-out forwards;
-}
-@keyframes burst{
-  from{transform:translate(-50%,-50%) scale(0);opacity:1}
-  to{transform:translate(-50%,-120%) scale(2);opacity:0}
-}
+        .buttons { display: flex; gap: 15px; margin-top: 25px; }
 
-/* ===== FIREWORKS ===== */
-.firework{
-  position:absolute;
-  left:50%;
-  top:50%;
-  font-size:20px;
-  transform:translate(-50%,-50%);
-  animation:firework 1s ease-out forwards;
-}
-@keyframes firework{
-  0%{transform:translate(-50%,-50%) scale(.2);opacity:1}
-  100%{
-    transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.8);
-    opacity:0;
-  }
-}
+        button {
+            cursor: pointer; transition: 0.3s; border: none;
+            font-family: 'Fredoka', sans-serif; font-weight: 600; border-radius: 50px;
+        }
 
-/* ===== FINAL ===== */
-#finalText{
-  position:absolute;
-  top:16px;
-  left:50%;
-  transform:translateX(-50%);
-  font-family:'Playfair Display',serif;
-  font-size:7vw;
-  opacity:0;
-  transition:.8s;
-  color:#ffe5ec;
-}
+        .primary-btn { background-color: #d00000; color: white; width: 100%; padding: 15px; font-size: 1.1rem; }
+        #noBtn { background-color: #e9ecef; color: #495057; width: 100%; padding: 15px; }
 
-/* ===== ONLY ADDED GLOW EFFECTS ===== */
+        .hidden { display: none; }
 
-/* Red glow on curved HAPPY VALENTINE’S DAY */
-#curvedText{
-  filter:
-    drop-shadow(0 0 6px #ff2e63)
-    drop-shadow(0 0 12px #ff5d8f)
-    drop-shadow(0 0 22px rgba(255,93,143,.8));
-}
+        .heart-particle {
+            position: absolute; pointer-events: none; font-size: 2rem;
+            z-index: 100; animation: burstMove 2s ease-out forwards;
+        }
 
-/* Red glow on final Happy Valentine’s Day */
-#finalText{
-  text-shadow:
-    0 0 6px rgba(255,60,120,.9),
-    0 0 14px rgba(255,93,143,.8),
-    0 0 24px rgba(255,93,143,.6);
-}
-
-/* White glow only on Sam */
-#finalText span{
-  color:#fff;
-  text-shadow:
-    0 0 6px rgba(255,255,255,.95),
-    0 0 12px rgba(255,255,255,.8),
-    0 0 22px rgba(255,255,255,.6);
-}
-/* ===== SMALL HEART BUTTON ===== */
-.heartWrapper{
-  position:relative;
-  width:80px;        /* smaller width */
-  height:70px;       /* smaller height */
-  margin:20px auto 0;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:.3s;
-  pointer-events:auto;
-  z-index:20;
-}
-
-/* ===== HEART SHAPE ===== */
-.heartShape{
-  position:absolute;
-  width:50px;       /* smaller heart */
-  height:50px;
-  background:#ff4d6d;
-  transform:rotate(-45deg);
-}
-
-.heartShape:before,
-.heartShape:after{
-  content:"";
-  position:absolute;
-  width:50px;
-  height:50px;
-  background:#ff4d6d;
-  border-radius:50%;
-}
-
-.heartShape:before{
-  top:-25px;
-  left:0;
-}
-
-.heartShape:after{
-  left:25px;
-  top:0;
-}
-
-/* ===== TEXT CENTERED ===== */
-.heartText{
-  position:relative;
-  z-index:2;
-  color:#fff;
-  font-family:'Playfair Display',serif;
-  font-size:12px;  /* smaller text */
-  text-align:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-}
-
-/* HOVER EFFECT */
-.heartWrapper:hover{
-  transform:scale(1.1);
-}
-/* ===== HEART BUTTON (absolute inside card) ===== */
-.heartBtn{
-  position:absolute; /* absolute so it doesn't affect container */
-  bottom:20px;       /* distance from bottom of card */
-  left:50%;
-  transform:translateX(-50%);
-  width:60px;        /* smaller width */
-  height:55px;       /* smaller height */
-  cursor:pointer;
-  border:none;
-  background:none;   /* background handled by heartShape */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:20;
-  transition:transform .3s;
-  pointer-events:auto;
-}
-
-/* ===== HEART SHAPE ===== */
-.heartShape{
-  position:relative;
-  width:60px;
-  height:60px;
-  background:#ff4d6d;
-  transform:rotate(-45deg);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.heartShape:before,
-.heartShape:after{
-  content:"";
-  position:absolute;
-  width:60px;
-  height:60px;
-  background:#ff4d6d;
-  border-radius:50%;
-}
-
-.heartShape:before{
-  top:-30px;
-  left:0;
-}
-
-.heartShape:after{
-  left:30px;
-  top:0;
-}
-
-/* ===== TEXT CENTERED ===== */
-.heartText{
-  color:#fff;
-  font-family:'Playfair Display', serif;
-  font-size:10px;  /* smaller font */
-  text-align:center;
-  pointer-events:none;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* ===== HOVER EFFECT ===== */
-.heartBtn:hover{
-  transform:translateX(-50%) scale(1.1);
-}
-
-
-
-</style>
+        @keyframes burstMove {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.2); opacity: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
-<audio id="bgMusic" src="music.mp3" preload="auto" loop></audio>
-
-<div class="banner">
-  <span>💖 Every heartbeat of mine whispers your name 💖 Happy Valentine’s Day 💖</span>
+<div class="banner-wrapper">
+    <div class="banner-text">
+        💞 Every heartbeat of mine whispers your name 💞 Happy Valentine’s Day Sam 💞 Every heartbeat of mine whispers your name 💞 Happy Valentine’s Day Sam 💞
+    </div>
 </div>
 
-<script>
-for(let i=0;i<22;i++){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.textContent="💖";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=4+Math.random()*4+"s";
-  document.body.appendChild(h);
-}
-</script>
+<div class="rain-container" id="rain"></div>
 
-<div class="card" id="card">
-  <h2 id="headerText">Please Open This <br>📩</h2>
+<audio id="valentineMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="inputBox" id="inputBox">
-    <input id="nameInput" placeholder="Enter your name">
-    <p id="errorMsg">This letter isn’t for you 💔</p>
-  </div>
-
-  <div id="nameEffect">
-    <p>Happy Valentine’s Day 💞</p>
-  </div>
-
-  <div id="valentineQuestion">
-    <p>
-      I made this little page just to ask you something. 💘🥰<br><br>
-      No pressure at all — I just thought I’d try in a creative way.<br><br>
-      Would you like to go out with me this Valentine’s Day? 💐
-    </p>
-    <button id="yesBtn">Yes, I’d love to 💖</button>
-    <button id="noBtn">No...</button>
-  </div>
-
-  <svg viewBox="0 0 500 260">
-    <defs>
-      <linearGradient id="loveGradient">
-        <stop offset="0%" stop-color="#ff5d8f"/>
-        <stop offset="100%" stop-color="#ffb3c6"/>
-      </linearGradient>
-      <path id="curve" d="M50 160 Q250 80 450 160"/>
-    </defs>
-    <text id="curvedText">
-      <textPath href="#curve" startOffset="50%" text-anchor="middle"></textPath>
-    </text>
-  </svg>
-
-  <svg class="ring" viewBox="0 0 100 90">
-    <path d="M50 80 C20 60,0 40,25 20 C40 5,50 25,50 25 C50 25,60 5,75 20 C100 40,80 60,50 80" class="progress"/>
-  </svg>
-
-  <button id="startBtn">OPEN</button>
-
-  <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
- <!-- Heart Button -->
-<button id="afterFinalBtn" class="heartBtn" style="display:none;">
-  <div class="heartShape">
-    <span class="heartText">Here if you want to continue 💖</span>
-  </div>
-</button>
-
-
-</button>
-
-
+<div class="container" id="page1">
+    <span style="font-size: 4rem; display: block; margin-bottom: 15px;">📩</span>
+    <h1>A special message...</h1>
+    <button class="primary-btn" onclick="showPage(2)">PLEASE OPEN THIS</button>
 </div>
 
-<script>
-const messages=["HAPPY","VALENTINE’S","DAY 💖"];
-const headers=["For You 💌","With Love 💖","Just for You 💝"];
+<div class="container hidden" id="page2">
+    <span style="font-size: 3rem; display: block; margin-bottom: 15px;">🔐</span>
+    <h1>Recipient Check</h1>
+    <input type="text" id="nameInput" placeholder="Enter your name here..." autocomplete="off">
+    <button class="primary-btn" onclick="verifyName()">VERIFY IDENTITY</button>
+</div>
 
-const btn=document.getElementById("startBtn");
-const inputBox=document.getElementById("inputBox");
-const nameInput=document.getElementById("nameInput");
-const errorMsg=document.getElementById("errorMsg");
-const textPath=document.querySelector("textPath");
-const textEl=document.getElementById("curvedText");
-const ring=document.querySelector(".progress");
-const finalText=document.getElementById("finalText");
-const headerText=document.getElementById("headerText");
-const music=document.getElementById("bgMusic");
+<div class="container hidden" id="page3">
+    <span style="font-size: 3.5rem; display: block; margin-bottom: 15px;">✨</span>
+    <p style="font-size: 1.5rem; color: #444;">"In all the world, there is no heart for me like yours."</p>
+    <button class="primary-btn" onclick="startInfiniteLoop()">PLEASE CLICK TO CONTINUE</button>
+</div>
 
-const nameEffect=document.getElementById("nameEffect");
-const valentineQuestion=document.getElementById("valentineQuestion");
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-
-let stage=0,i=0,progress=0;
-let loopTimeout = null;
-let stopLoop = false;
-
-btn.onclick=()=>{
-  btn.style.display="none";
-  inputBox.style.display="block";
-  nameInput.focus();
-};
-
-// Prevent mobile zoom on input (iOS)
-nameInput.addEventListener("focus", () => {
-  document.getElementById("card").style.transform = "scale(1)";
-});
-nameInput.addEventListener("blur", () => {
-  document.getElementById("card").style.transform = "scale(1)";
-});
-
-nameInput.addEventListener("keydown",e=>{
-  if(e.key==="Enter"){
-    if(nameInput.value.trim().toLowerCase()==="sam"){
-      inputBox.style.display="none";
-      nameEffect.style.display="block";
-      document.body.classList.add("nameAccepted");
-      heartBurst();
-      setTimeout(()=>{
-        nameEffect.style.display="none";
-        document.body.classList.remove("nameAccepted");
-        valentineQuestion.style.display="block";
-      },1800);
-    }else{
-      errorMsg.style.opacity=1;
-      inputBox.classList.add("shake");
-      setTimeout(()=>inputBox.classList.remove("shake"),400);
-    }
-  }
-});
-
-
-
-yesBtn.onclick=()=>{
-  valentineQuestion.style.display="none";
-  music.play();
-  document.body.classList.add("valentine");
-  heartBurst();
-  playStage();
-};
-
-noBtn.onclick=()=>{
-  noBtn.textContent="but thank you for asking 🤍";
-  noBtn.classList.add("shake");
-  setTimeout(()=>noBtn.classList.remove("shake"),400);
-};
-
-function heartBurst(){
-  for(let i=0;i<8;i++){
-    const b=document.createElement("div");
-    b.className="burst";
-    b.textContent="🥰";
-    b.style.left=Math.random()*100+"%";
-    b.style.top=Math.random()*100+"%";
-    document.getElementById("card").appendChild(b);
-    setTimeout(()=>b.remove(),900);
-  }
-}
-
-function fireworks(){
-  for(let i=0;i<14;i++){
-    const f=document.createElement("div");
-    f.className="firework";
-    f.textContent="💖";
-    f.style.setProperty("--x",(Math.random()*200-100)+"px");
-    f.style.setProperty("--y",(Math.random()*200-100)+"px");
-    document.getElementById("card").appendChild(f);
-    setTimeout(()=>f.remove(),1000);
-  }
-}
-
-function playStage(){
-  i=0;progress=0;
-  textPath.textContent="";
-  ring.style.display="block";
-  ring.style.strokeDashoffset=420;
-  headerText.textContent=headers[stage];
-  headerText.style.opacity=1;
-
-  const interval=setInterval(()=>{
-    progress+=3;
-    ring.style.strokeDashoffset=420-(420*progress/100);
-
-    if(i<messages[stage].length){
-      textPath.textContent+=messages[stage][i++];
-      textEl.style.opacity=1;
-    }
-
-    if(progress>=100){
-      clearInterval(interval);
-      fireworks();
-      stage++;
-      setTimeout(stage===messages.length?showFinal:playStage,700);
-    }
-  },20);
-}
-
-function showFinal(){
-  headerText.style.opacity=0;
-  textEl.style.opacity=0;
-  ring.style.display="none";
-  finalText.style.opacity=1;
-
-  const askBtn = document.getElementById("afterFinalBtn");
-  afterFinalBtn.onclick = () => {
-
-  stopLoop = true;           // stop future loops
-  clearTimeout(loopTimeout); // cancel scheduled restart
-
-  headerText.style.opacity = 0;
-  textEl.style.opacity = 0;
-  ring.style.display = "none";
-  finalText.style.opacity = 0;
-  afterFinalBtn.style.display = "none";
-
-  valentineQuestion.style.display = "block";
-};
-
-
-  setTimeout(()=>{
-    askBtn.style.display="inline-block";
-  },800);
-
-  // STORE timeout reference
-  loopTimeout = setTimeout(()=>{
-    if(!stopLoop){
-      finalText.style.opacity=0;
-      askBtn.style.display="none";
-      stage=0;
-      playStage();
-    }
-  },4000);
-}
-
-
-
-</script>
-
-<script>
-// ================== STEP 4: Function to Save to Google Sheet ==================
-function saveToSheet(answer){
-  fetch("https://script.google.com/macros/s/AKfycbx3PtSp9QS3kZx1zOpOnKA-ahyzbRWQIYHm-trv8wTXlY3IFZU-CcPTAmIQrTc9IM2pOw/exec", {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: nameInput.value.trim(),
-      response: answer,
-      time: new Date().toLocaleString()
-    })
-  });
-}
-
-// ================== STEP 5: Update YES/NO Button Actions ==================
-yesBtn.onclick = () => {
-
-  saveToSheet("YES 💖");
-
-  valentineQuestion.style.display = "none";
-
-  stopLoop = false;   // 🔥 Allow looping again
-  stage = 0;
-
-  music.play();
-  document.body.classList.add("valentine");
-  heartBurst();
-
-  playStage();
-};
-
-
-
-let noClickCount = 0;
-
-noBtn.onclick = () => {
-  noClickCount++;
-  saveToSheet("NO 💔");
-
-  if (noClickCount === 1) {
-    noBtn.textContent = "Are you really sure? 🥺";
-    noBtn.classList.add("shake");
-    setTimeout(() => noBtn.classList.remove("shake"), 400);
-  } 
-  else if (noClickCount >= 2) {
-    noBtn.textContent = "Okay…🤍";
+<div class="container hidden" id="page4">
+    <div id="curvedTextContainer">
+        <svg viewBox="0 0 300 120" class="curved-text-svg" preserveAspectRatio="xMidYMid meet">
+            <path id="curvePath" d="M 20,100 Q 150,-10 280,100" fill="transparent" />
+            <text>
+                <textPath xlink:href="#curvePath" startOffset="50%" text-anchor="middle" id="curvedTextBody">
+                    HAPPY
+                </textPath>
+            </text>
+        </svg>
+    </div>
     
-    setTimeout(() => {
-      // Try to close
-      window.close();
+    <div style="margin-top: 0px;">
+        <div class="heart-btn-wrapper" onclick="showPage(5)">
+            <div class="heart-icon">❤️</div>
+            <div class="heart-overlay-text">CLICK ME IF YOU WANT TO CONTINUE</div>
+        </div>
+    </div>
+</div>
 
-      // Fallback if browser blocks closing
-      setTimeout(() => {
-        window.location.href = "about:blank";
-      }, 500);
+<div class="container hidden" id="page5">
+    <p>I made this little page just to ask you something. 💘🥰</p>
+    <p>No pressure at all — I just thought I’d try in a creative way.</p>
+    <h1 style="font-size: 1.5rem;">Would you like to go out with me this Valentine’s Day? 💐</h1>
+    
+    <div class="buttons">
+        <button class="primary-btn" id="yesBtn">YES!</button>
+        <button id="noBtn">NO</button>
+    </div>
+</div>
 
-    }, 800);
-  }
-};
+<script>
+    const words = ["HAPPY", "VALENTINES", "DAY", "💞 Happy Valentine's Day Sam 💞"];
+    let wordIndex = 0;
+    const music = document.getElementById('valentineMusic');
+    const nameInput = document.getElementById('nameInput');
+    let loopInterval;
 
+    function saveToSheet(answer) {
+        fetch("https://script.google.com/macros/s/AKfycbx3PtSp9QS3kZx1zOpOnKA-ahyzbRWQIYHm-trv8wTXlY3IFZU-CcPTAmIQrTc9IM2pOw/exec", {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: nameInput.value.trim(),
+                response: answer,
+                time: new Date().toLocaleString()
+            })
+        });
+    }
+
+    document.getElementById('yesBtn').onclick = () => {
+        saveToSheet("YES 💖");
+        startInfiniteLoop(); 
+    };
+
+    document.getElementById('noBtn').onclick = () => {
+        saveToSheet("NO 💔");
+        setTimeout(() => {
+            document.body.innerHTML = "<h1 style='color:#d00000; text-align:center; margin-top:40vh;'>Bye! ❤️</h1>";
+        }, 500);
+    };
+
+    function createRain() {
+        const rainContainer = document.getElementById('rain');
+        const emojis = ['❤️', '🌸', '💖', '🌹'];
+        setInterval(() => {
+            const drop = document.createElement('div');
+            drop.className = 'drop';
+            drop.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            drop.style.left = Math.random() * 100 + "vw";
+            drop.style.animationDuration = (Math.random() * 3 + 3) + "s";
+            rainContainer.appendChild(drop);
+            setTimeout(() => drop.remove(), 6000);
+        }, 400);
+    }
+    createRain();
+
+    function showPage(pageNumber) {
+        document.querySelectorAll('.container').forEach(div => div.classList.add('hidden'));
+        document.getElementById('page' + pageNumber).classList.remove('hidden');
+    }
+
+    function verifyName() {
+        if (nameInput.value.trim().toLowerCase() === "sam") {
+            showPage(3);
+        } else {
+            alert("Access Denied.");
+        }
+    }
+
+    function createHeartBurst() {
+        const container = document.getElementById('page4');
+        if(container.classList.contains('hidden')) return;
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-particle';
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 130 + Math.random() * 150;
+            heart.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+            heart.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+            heart.style.left = '50%'; heart.style.top = '70%';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        }
+    }
+
+    function startInfiniteLoop() {
+        showPage(4);
+        music.play().catch(() => {});
+        if(!loopInterval) {
+            createHeartBurst();
+            loopInterval = setInterval(() => {
+                wordIndex = (wordIndex + 1) % words.length;
+                const body = document.getElementById('curvedTextBody');
+                
+                // Extra shrinkage for the long phrase with emojis
+                if(words[wordIndex].length > 15) {
+                    body.parentElement.style.fontSize = "13px";
+                } else {
+                    body.parentElement.style.fontSize = "22px";
+                }
+                
+                body.textContent = words[wordIndex];
+                createHeartBurst();
+            }, 1800);
+        }
+    }
 </script>
-
 
 </body>
 </html>
