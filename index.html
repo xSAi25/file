@@ -265,6 +265,72 @@ button{
     0 0 12px rgba(255,255,255,.8),
     0 0 22px rgba(255,255,255,.6);
 }
+/* ===== SMALL HEART BUTTON ===== */
+.heartWrapper{
+  position:relative;
+  width:80px;        /* smaller width */
+  height:70px;       /* smaller height */
+  margin:20px auto 0;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.3s;
+  pointer-events:auto;
+  z-index:20;
+}
+
+/* ===== HEART SHAPE ===== */
+.heartShape{
+  position:absolute;
+  width:50px;       /* smaller heart */
+  height:50px;
+  background:#ff4d6d;
+  transform:rotate(-45deg);
+}
+
+.heartShape:before,
+.heartShape:after{
+  content:"";
+  position:absolute;
+  width:50px;
+  height:50px;
+  background:#ff4d6d;
+  border-radius:50%;
+}
+
+.heartShape:before{
+  top:-25px;
+  left:0;
+}
+
+.heartShape:after{
+  left:25px;
+  top:0;
+}
+
+/* ===== TEXT CENTERED ===== */
+.heartText{
+  position:relative;
+  z-index:2;
+  color:#fff;
+  font-family:'Playfair Display',serif;
+  font-size:12px;  /* smaller text */
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+
+/* HOVER EFFECT */
+.heartWrapper:hover{
+  transform:scale(1.1);
+}
+
+
 </style>
 </head>
 
@@ -329,6 +395,14 @@ for(let i=0;i<22;i++){
   <button id="startBtn">OPEN</button>
 
   <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
+  <div id="afterFinalBtn" class="heartWrapper" style="display:none;">
+  <div class="heartShape"></div>
+  <span class="heartText">Click Me 💖</span>
+</div>
+
+</button>
+
+
 </div>
 
 <script>
@@ -352,6 +426,8 @@ const yesBtn=document.getElementById("yesBtn");
 const noBtn=document.getElementById("noBtn");
 
 let stage=0,i=0,progress=0;
+let loopTimeout = null;
+let stopLoop = false;
 
 btn.onclick=()=>{
   btn.style.display="none";
@@ -459,12 +535,39 @@ function showFinal(){
   ring.style.display="none";
   finalText.style.opacity=1;
 
+  const askBtn = document.getElementById("afterFinalBtn");
+  afterFinalBtn.onclick = () => {
+
+  stopLoop = true;           // stop future loops
+  clearTimeout(loopTimeout); // cancel scheduled restart
+
+  headerText.style.opacity = 0;
+  textEl.style.opacity = 0;
+  ring.style.display = "none";
+  finalText.style.opacity = 0;
+  afterFinalBtn.style.display = "none";
+
+  valentineQuestion.style.display = "block";
+};
+
+
   setTimeout(()=>{
-    finalText.style.opacity=0;
-    stage=0;
-    playStage();
-  },3000);
+    askBtn.style.display="inline-block";
+  },800);
+
+  // STORE timeout reference
+  loopTimeout = setTimeout(()=>{
+    if(!stopLoop){
+      finalText.style.opacity=0;
+      askBtn.style.display="none";
+      stage=0;
+      playStage();
+    }
+  },4000);
 }
+
+
+
 </script>
 
 <script>
@@ -484,13 +587,22 @@ function saveToSheet(answer){
 
 // ================== STEP 5: Update YES/NO Button Actions ==================
 yesBtn.onclick = () => {
+
   saveToSheet("YES 💖");
+
   valentineQuestion.style.display = "none";
+
+  stopLoop = false;   // 🔥 Allow looping again
+  stage = 0;
+
   music.play();
   document.body.classList.add("valentine");
   heartBurst();
+
   playStage();
 };
+
+
 
 let noClickCount = 0;
 
