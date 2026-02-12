@@ -329,6 +329,74 @@ button{
 .heartWrapper:hover{
   transform:scale(1.1);
 }
+/* ===== HEART BUTTON (absolute inside card) ===== */
+.heartBtn{
+  position:absolute; /* absolute so it doesn't affect container */
+  bottom:20px;       /* distance from bottom of card */
+  left:50%;
+  transform:translateX(-50%);
+  width:60px;        /* smaller width */
+  height:55px;       /* smaller height */
+  cursor:pointer;
+  border:none;
+  background:none;   /* background handled by heartShape */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:20;
+  transition:transform .3s;
+  pointer-events:auto;
+}
+
+/* ===== HEART SHAPE ===== */
+.heartShape{
+  position:relative;
+  width:60px;
+  height:60px;
+  background:#ff4d6d;
+  transform:rotate(-45deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.heartShape:before,
+.heartShape:after{
+  content:"";
+  position:absolute;
+  width:60px;
+  height:60px;
+  background:#ff4d6d;
+  border-radius:50%;
+}
+
+.heartShape:before{
+  top:-30px;
+  left:0;
+}
+
+.heartShape:after{
+  left:30px;
+  top:0;
+}
+
+/* ===== TEXT CENTERED ===== */
+.heartText{
+  color:#fff;
+  font-family:'Playfair Display', serif;
+  font-size:10px;  /* smaller font */
+  text-align:center;
+  pointer-events:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===== HOVER EFFECT ===== */
+.heartBtn:hover{
+  transform:translateX(-50%) scale(1.1);
+}
+
 
 
 </style>
@@ -395,10 +463,13 @@ for(let i=0;i<22;i++){
   <button id="startBtn">OPEN</button>
 
   <div id="finalText">💞 Happy Valentine’s Day, <span>Sam</span> 💞</div>
-  <div id="afterFinalBtn" class="heartWrapper" style="display:none;">
-  <div class="heartShape"></div>
-  <span class="heartText">Click Me 💖</span>
-</div>
+ <!-- Heart Button -->
+<button id="afterFinalBtn" class="heartBtn" style="display:none;">
+  <div class="heartShape">
+    <span class="heartText">Here if you want to continue 💖</span>
+  </div>
+</button>
+
 
 </button>
 
