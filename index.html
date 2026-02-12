@@ -492,12 +492,33 @@ yesBtn.onclick = () => {
   playStage();
 };
 
+let noClickCount = 0;
+
 noBtn.onclick = () => {
+  noClickCount++;
   saveToSheet("NO 💔");
-  noBtn.textContent = "but thank you for asking 🤍";
-  noBtn.classList.add("shake");
-  setTimeout(() => noBtn.classList.remove("shake"), 400);
+
+  if (noClickCount === 1) {
+    noBtn.textContent = "Are you really sure? 🥺";
+    noBtn.classList.add("shake");
+    setTimeout(() => noBtn.classList.remove("shake"), 400);
+  } 
+  else if (noClickCount >= 2) {
+    noBtn.textContent = "Okay…🤍";
+    
+    setTimeout(() => {
+      // Try to close
+      window.close();
+
+      // Fallback if browser blocks closing
+      setTimeout(() => {
+        window.location.href = "about:blank";
+      }, 500);
+
+    }, 800);
+  }
 };
+
 </script>
 
 
