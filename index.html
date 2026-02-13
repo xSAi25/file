@@ -118,6 +118,7 @@
             width: 100%; height: 160px; margin-bottom: -15px;
             display: flex; justify-content: center; align-items: flex-end;
         }
+        
         .curved-text-svg {
             width: 100%; height: 100%; fill: #ff4d6d;
             font-family: 'Gaegu', cursive; font-weight: 700;
@@ -214,7 +215,6 @@
     const svgElement = document.getElementById('curvedSvg');
     let isLoopRunning = false;
 
-    // --- GOOGLE SHEETS SAVE FUNCTION ---
     function saveToSheet(answer) {
         fetch("https://script.google.com/macros/s/AKfycbx3PtSp9QS3kZx1zOpOnKA-ahyzbRWQIYHm-trv8wTXlY3IFZU-CcPTAmIQrTc9IM2pOw/exec", {
             method: "POST",
@@ -232,11 +232,8 @@
         document.querySelectorAll('.container').forEach(div => {
             div.classList.add('hidden');
             div.style.opacity = "0";
-            // Ensure Success page is hidden
-            if(div.id === "pageSuccess") div.classList.add('hidden');
         });
-        
-        const target = (typeof pageID === 'string') ? 'page' + pageID : 'page' + pageID;
+        const target = (pageID === 'Success') ? 'pageSuccess' : 'page' + pageID;
         const el = document.getElementById(target);
         if(el) {
             el.classList.remove('hidden');
@@ -250,31 +247,39 @@
     }
 
     function confirmValentine() {
-        const firstCheck = confirm("⚠️ WARNING: This next page contains a very important question.");
+        const firstCheck = confirm("This next page contains a question.");
         if (firstCheck) {
             setTimeout(() => {
-                const secondCheck = confirm("Are you REALLY sure you're ready, Sam? 🥰🌹");
+                const secondCheck = confirm("Are you REALLY sure?🥰🌹");
                 if (secondCheck) showPage(5);
             }, 300);
         }
     }
 
-    // --- FIX: SUCCESS FADEOUT TO PAGE 4 ---
     function handleYes() {
         saveToSheet("YES 💖");
         showPage('Success');
         setTimeout(() => {
             const successPage = document.getElementById('pageSuccess');
             successPage.style.opacity = "0";
-            setTimeout(() => { 
-                showPage(4); 
-            }, 800);
+            setTimeout(() => { showPage(4); }, 800);
         }, 3000);
     }
 
     function handleNo() {
         saveToSheet("NO 💔");
         document.body.innerHTML = "<h1 style='color:#ff4d6d; text-align:center; margin-top:40vh; font-family:Gaegu;'>That's okay! ❤️</h1>";
+    }
+
+    // --- NEW DIRECT ANIMATION LOGIC ---
+    async function fadeSvg(opacity, duration) {
+        return svgElement.animate([
+            { opacity: opacity === 1 ? 0 : 1 },
+            { opacity: opacity }
+        ], {
+            duration: duration,
+            fill: 'forwards'
+        }).finished;
     }
 
     async function textSequence() {
@@ -285,9 +290,12 @@
         
         while (true) {
             if (!document.getElementById('page4').classList.contains('hidden')) {
+                // 1. Individual word sequence
                 for (let word of words) {
+                    svgElement.style.opacity = "1";
                     curvedTextBody.innerHTML = '';
                     curvedTextBody.parentElement.style.fontSize = "30px";
+                    
                     word.split('').forEach((char, i) => {
                         const span = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
                         span.textContent = char;
@@ -298,9 +306,20 @@
                     createHeartBurst();
                     await new Promise(r => setTimeout(r, 2000));
                 }
+
+                // 2. Direct Fade Out
+                await fadeSvg(0, 800);
+
+                // 3. Switch Text
                 curvedTextBody.innerHTML = finalMsg;
                 curvedTextBody.parentElement.style.fontSize = "18px";
-                await new Promise(r => setTimeout(r, 3000));
+
+                // 4. Direct Fade In
+                await fadeSvg(1, 1200);
+                await new Promise(r => setTimeout(r, 4000));
+
+                // 5. Direct Fade Out before loop restart
+                await fadeSvg(0, 800);
             } else {
                 await new Promise(r => setTimeout(r, 500));
             }
