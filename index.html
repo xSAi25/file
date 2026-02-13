@@ -188,15 +188,13 @@
     </div>
     <div class="heart-btn-wrapper" onclick="confirmValentine()">
         <div class="heart-icon">❤️</div>
-        <div class="heart-overlay-text">CLICK HERE IF YOU WANT TO CONTINUE</div>
+        <div class="heart-overlay-text">CLICK ME IF YOU WANT TO CONTINUE</div>
     </div>
 </div>
 
 <div class="container hidden" id="page5">
     <p>I made this little page just to ask you something. 💘🥰</p>
-    <p style="font-style: italic; color: #888; font-size: 1.1rem;">I just thought I’d try in a creative way.</p>
     <h1>I hope this greeting brings a smile to your face. Happy Valentine's Day 💐</h1>
-    <p>You might want to check your calendar… I think something bloomed there.🌹</p>
     <div class="buttons">
         <button class="primary-btn" id="yesBtn" onclick="handleYes()">YES!</button>
         <button id="noBtn" onclick="handleNo()">NO</button>
@@ -300,14 +298,16 @@
             showPage('FinalYes');
             createHeartBurst(true);
 
-            // Wait 4 seconds on the "You made my day" screen, then fade back to page 4
             setTimeout(() => {
                 const finalPage = document.getElementById('pageFinalYes');
                 finalPage.style.opacity = "0";
                 setTimeout(() => {
+                    // RESET PAGE 4 STATE
+                    svgElement.style.opacity = "1";
+                    svgElement.getAnimations().forEach(anim => anim.cancel());
                     showPage(4);
-                }, 1000); // Wait for fade
-            }, 4000); // 4 seconds display time
+                }, 1000);
+            }, 4000);
 
         } else {
             document.body.innerHTML = "<h1 style='color:#ff4d6d; text-align:center; margin-top:40vh; font-family:Gaegu;'>That's okay! I'm just glad I got to share this with you. ❤️</h1>";
@@ -326,12 +326,14 @@
         const finalMsg = "💞 Happy Valentine's Day Sam 💞";
         
         while (true) {
+            // We check for 'FinalYes' or 'Question' being hidden so it keeps trying to run
             if (!document.getElementById('page4').classList.contains('hidden')) {
                 svgElement.getAnimations().forEach(anim => anim.cancel());
                 svgElement.style.opacity = "1";
                 curvedTextBody.innerHTML = '';
                 
                 for (let word of words) {
+                    if (document.getElementById('page4').classList.contains('hidden')) break;
                     curvedTextBody.innerHTML = '';
                     curvedTextBody.parentElement.style.fontSize = "30px";
                     
@@ -346,12 +348,14 @@
                     await new Promise(r => setTimeout(r, 2000));
                 }
 
-                await svgElement.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 800, fill: 'forwards' }).finished;
-                curvedTextBody.innerHTML = finalMsg;
-                curvedTextBody.parentElement.style.fontSize = "18px";
-                await svgElement.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1200, fill: 'forwards' }).finished;
-                await new Promise(r => setTimeout(r, 8000)); 
-                await svgElement.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 800, fill: 'forwards' }).finished;
+                if (!document.getElementById('page4').classList.contains('hidden')) {
+                    await svgElement.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 800, fill: 'forwards' }).finished;
+                    curvedTextBody.innerHTML = finalMsg;
+                    curvedTextBody.parentElement.style.fontSize = "18px";
+                    await svgElement.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1200, fill: 'forwards' }).finished;
+                    await new Promise(r => setTimeout(r, 8000)); 
+                    await svgElement.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 800, fill: 'forwards' }).finished;
+                }
             } else {
                 await new Promise(r => setTimeout(r, 500));
             }
