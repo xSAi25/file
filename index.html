@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I made this little web app just for you.</title>
+    <title>Open it, Please... I made this just for you</title>
     <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -122,6 +122,7 @@
         .curved-text-svg {
             width: 100%; height: 100%; fill: #ff4d6d;
             font-family: 'Gaegu', cursive; font-weight: 700;
+            opacity: 1; /* Default visible */
         }
 
         .hidden { display: none; opacity: 0; }
@@ -247,10 +248,10 @@
     }
 
     function confirmValentine() {
-        const firstCheck = confirm("This next page contains a question.");
+        const firstCheck = confirm("💖This next page contains a very important question.💖");
         if (firstCheck) {
             setTimeout(() => {
-                const secondCheck = confirm("Are you REALLY sure?🥰🌹");
+                const secondCheck = confirm("Are you REALLY sure? 🥰🌹");
                 if (secondCheck) showPage(5);
             }, 300);
         }
@@ -271,17 +272,7 @@
         document.body.innerHTML = "<h1 style='color:#ff4d6d; text-align:center; margin-top:40vh; font-family:Gaegu;'>That's okay! ❤️</h1>";
     }
 
-    // --- NEW DIRECT ANIMATION LOGIC ---
-    async function fadeSvg(opacity, duration) {
-        return svgElement.animate([
-            { opacity: opacity === 1 ? 0 : 1 },
-            { opacity: opacity }
-        ], {
-            duration: duration,
-            fill: 'forwards'
-        }).finished;
-    }
-
+    /* --- THE BULLETPROOF SEQUENCE --- */
     async function textSequence() {
         if (isLoopRunning) return;
         isLoopRunning = true;
@@ -290,9 +281,14 @@
         
         while (true) {
             if (!document.getElementById('page4').classList.contains('hidden')) {
+                
+                // --- RESET EVERYTHING FOR NEW LOOP ---
+                svgElement.getAnimations().forEach(anim => anim.cancel()); // Kill all active fades
+                svgElement.style.opacity = "1"; // Force visibility
+                curvedTextBody.innerHTML = ''; // Clear text
+                
                 // 1. Individual word sequence
                 for (let word of words) {
-                    svgElement.style.opacity = "1";
                     curvedTextBody.innerHTML = '';
                     curvedTextBody.parentElement.style.fontSize = "30px";
                     
@@ -307,19 +303,20 @@
                     await new Promise(r => setTimeout(r, 2000));
                 }
 
-                // 2. Direct Fade Out
-                await fadeSvg(0, 800);
+                // 2. Fade Out "DAY"
+                await svgElement.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 800, fill: 'forwards' }).finished;
 
-                // 3. Switch Text
+                // 3. Switch to final message
                 curvedTextBody.innerHTML = finalMsg;
                 curvedTextBody.parentElement.style.fontSize = "18px";
 
-                // 4. Direct Fade In
-                await fadeSvg(1, 1200);
+                // 4. Fade In final message
+                await svgElement.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 1200, fill: 'forwards' }).finished;
                 await new Promise(r => setTimeout(r, 4000));
 
-                // 5. Direct Fade Out before loop restart
-                await fadeSvg(0, 800);
+                // 5. Fade Out final message before restarting
+                await svgElement.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 800, fill: 'forwards' }).finished;
+                
             } else {
                 await new Promise(r => setTimeout(r, 500));
             }
