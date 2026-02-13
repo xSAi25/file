@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Sam ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -13,7 +13,7 @@
             height: 100vh;
             margin: 0;
             background-color: #1a0508;
-            font-family: 'Fredoka', sans-serif;
+            font-family: 'Gaegu', cursive; /* Applied globally */
             overflow: hidden;
             position: relative;
         }
@@ -29,8 +29,8 @@
         .banner-text {
             display: inline-block;
             white-space: nowrap;
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
             animation: scroll-banner 20s linear infinite;
         }
 
@@ -68,6 +68,9 @@
             transition: opacity 0.8s ease;
         }
 
+        h1 { font-size: 2.2rem; color: #d00000; }
+        p { font-size: 1.4rem; }
+
         /* --- ANIMATIONS --- */
         .letter {
             display: inline-block;
@@ -93,14 +96,15 @@
 
         .curved-text-svg {
             width: 100%; height: 100%; fill: #ffffff;
-            font-family: 'Fredoka', sans-serif; font-weight: 600;
+            font-family: 'Gaegu', cursive;
+            font-weight: 700;
             filter: drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 10px #d00000);
         }
 
         input {
             width: 85%; padding: 15px; margin-bottom: 25px;
             border: 3px solid #ffccd5; border-radius: 20px;
-            text-align: center; font-size: 1.3rem; font-family: 'Fredoka', sans-serif;
+            text-align: center; font-size: 1.5rem; font-family: 'Gaegu', cursive;
             color: #d00000; background-color: #fffafb; outline: none;
             box-sizing: border-box;
         }
@@ -109,15 +113,15 @@
         .heart-icon { font-size: 8rem; color: #d00000; animation: pulse 1.5s infinite; }
         .heart-overlay-text {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 70%; color: white; font-size: 0.75rem; font-weight: bold;
+            width: 75%; color: white; font-size: 0.9rem; font-weight: bold;
             line-height: 1.1; pointer-events: none; text-transform: uppercase;
         }
 
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         .buttons { display: flex; gap: 15px; margin-top: 25px; }
-        button { cursor: pointer; transition: 0.3s; border: none; font-family: 'Fredoka', sans-serif; font-weight: 600; border-radius: 50px; }
-        .primary-btn { background-color: #d00000; color: white; width: 100%; padding: 15px; font-size: 1.1rem; }
-        #noBtn { background-color: #e9ecef; color: #495057; width: 100%; padding: 15px; }
+        button { cursor: pointer; transition: 0.3s; border: none; font-family: 'Gaegu', cursive; font-weight: 700; border-radius: 50px; }
+        .primary-btn { background-color: #d00000; color: white; width: 100%; padding: 15px; font-size: 1.4rem; }
+        #noBtn { background-color: #e9ecef; color: #495057; width: 100%; padding: 15px; font-size: 1.4rem; }
         .hidden { display: none; opacity: 0; }
 
         .heart-particle {
@@ -160,7 +164,7 @@
 
 <div class="container hidden" id="page3">
     <span style="font-size: 3.5rem; display: block; margin-bottom: 15px;">✨</span>
-    <p style="font-size: 1.5rem; color: #444;">"In all the world, there is no heart for me like yours."</p>
+    <p>"In all the world, there is no heart for me like yours."</p>
     <button class="primary-btn" onclick="startInfiniteLoop()">PLEASE CLICK TO CONTINUE</button>
 </div>
 
@@ -181,8 +185,8 @@
 
 <div class="container hidden" id="page5">
     <p>I made this little page just to ask you something. 💘🥰</p>
-    <p style="font-style: italic; color: #666; font-size: 0.95rem;">No pressure at all — I just thought I’d try in a creative way.</p>
-    <h1 style="font-size: 1.5rem;">Would you like to go out with me this Valentine’s Day? 💐</h1>
+    <p style="font-style: italic; color: #666; font-size: 1.1rem;">No pressure at all — I just thought I’d try in a creative way.</p>
+    <h1>Would you like to go out with me this Valentine’s Day? 💐</h1>
     <div class="buttons">
         <button class="primary-btn" id="yesBtn" onclick="handleYes()">YES!</button>
         <button id="noBtn" onclick="handleNo()">NO</button>
@@ -226,7 +230,7 @@
 
     function handleNo() {
         saveToSheet("NO 💔");
-        setTimeout(() => { document.body.innerHTML = "<h1 style='color:#d00000; text-align:center; margin-top:40vh;'>That's okay! ❤️</h1>"; }, 500);
+        setTimeout(() => { document.body.innerHTML = "<h1 style='color:#d00000; text-align:center; margin-top:40vh; font-family:Gaegu;'>That's okay! ❤️</h1>"; }, 500);
     }
 
     function showPage(pageID) {
@@ -253,11 +257,10 @@
         
         while (true) {
             if (!document.getElementById('page4').classList.contains('hidden')) {
-                // Animate HAPPY, VALENTINES, DAY letter by letter
                 for (let word of words) {
                     svgElement.classList.remove('fade-out-anim', 'fade-in-total');
                     curvedTextBody.innerHTML = '';
-                    curvedTextBody.parentElement.style.fontSize = "22px";
+                    curvedTextBody.parentElement.style.fontSize = "30px";
 
                     word.split('').forEach((char, i) => {
                         const span = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
@@ -270,19 +273,16 @@
                     await new Promise(r => setTimeout(r, 2000));
                 }
 
-                // Final Message: Fade in total (No letter transition)
                 svgElement.classList.add('fade-out-anim');
                 await new Promise(r => setTimeout(r, 800));
                 
                 curvedTextBody.innerHTML = finalMessage;
-                curvedTextBody.parentElement.style.fontSize = "13px";
+                curvedTextBody.parentElement.style.fontSize = "18px";
                 svgElement.classList.remove('fade-out-anim');
                 svgElement.classList.add('fade-in-total');
                 
-                // Keep the final message for 3 seconds
                 await new Promise(r => setTimeout(r, 3000));
                 
-                // Fade out before restarting loop
                 svgElement.classList.add('fade-out-anim');
                 await new Promise(r => setTimeout(r, 1000));
             } else {
