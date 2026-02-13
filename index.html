@@ -89,15 +89,12 @@
         #curvedTextContainer {
             width: 100%; height: 160px; margin-bottom: -15px;
             display: flex; justify-content: center; align-items: flex-end;
-            /* Applying filter here helps Safari render the glow area better */
-            filter: drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 10px #d00000);
         }
 
         .curved-text-svg {
             width: 100%; height: 100%; fill: #ffffff;
             font-family: 'Fredoka', sans-serif; font-weight: 600;
-            /* CRITICAL FIX: prevents the straight-line clipping on iPhone */
-            overflow: visible !important;
+            filter: drop-shadow(0 0 6px #ff0000) drop-shadow(0 0 10px #d00000);
         }
 
         input {
@@ -163,9 +160,8 @@
 
 <div class="container hidden" id="page3">
     <span style="font-size: 3.5rem; display: block; margin-bottom: 15px;">✨</span>
-    <p style="font-size: 1.5rem; color: #444;">"Wishing you a day filled with love, smiles, and sweet moments.<br><br>
-You make life a little brighter just by being in it. 💕"</p>
-    <button class="primary-btn" onclick="startInfiniteLoop()">PLEASE CLICK TO CONTINUE❤️</button>
+    <p style="font-size: 1.5rem; color: #444;">"In all the world, there is no heart for me like yours."</p>
+    <button class="primary-btn" onclick="startInfiniteLoop()">PLEASE CLICK TO CONTINUE</button>
 </div>
 
 <div class="container hidden" id="page4">
@@ -223,11 +219,8 @@ You make life a little brighter just by being in it. 💕"</p>
         saveToSheet("YES 💖");
         showPage('Success');
         setTimeout(() => {
-            const successPage = document.getElementById('pageSuccess');
-            if (successPage) {
-                successPage.style.opacity = "0";
-                setTimeout(() => { showPage(4); }, 800);
-            }
+            document.getElementById('pageSuccess').style.opacity = "0";
+            setTimeout(() => { showPage(4); }, 800);
         }, 3000);
     }
 
@@ -243,10 +236,8 @@ You make life a little brighter just by being in it. 💕"</p>
         });
         const target = 'page' + pageID;
         const el = document.getElementById(target);
-        if (el) {
-            el.classList.remove('hidden');
-            setTimeout(() => { el.style.opacity = "1"; }, 50);
-        }
+        el.classList.remove('hidden');
+        setTimeout(() => { el.style.opacity = "1"; }, 50);
     }
 
     function verifyName() {
@@ -257,12 +248,12 @@ You make life a little brighter just by being in it. 💕"</p>
     async function textSequence() {
         if (isLoopRunning) return;
         isLoopRunning = true;
-        const words = ["HAPPY", "VALENTINE'S", "DAY"];
+        const words = ["HAPPY", "VALENTINES", "DAY"];
         const finalMessage = "💞 Happy Valentine's Day Sam 💞";
         
         while (true) {
-            const page4 = document.getElementById('page4');
-            if (page4 && !page4.classList.contains('hidden')) {
+            if (!document.getElementById('page4').classList.contains('hidden')) {
+                // Animate HAPPY, VALENTINES, DAY letter by letter
                 for (let word of words) {
                     svgElement.classList.remove('fade-out-anim', 'fade-in-total');
                     curvedTextBody.innerHTML = '';
@@ -279,6 +270,7 @@ You make life a little brighter just by being in it. 💕"</p>
                     await new Promise(r => setTimeout(r, 2000));
                 }
 
+                // Final Message: Fade in total (No letter transition)
                 svgElement.classList.add('fade-out-anim');
                 await new Promise(r => setTimeout(r, 800));
                 
@@ -287,8 +279,10 @@ You make life a little brighter just by being in it. 💕"</p>
                 svgElement.classList.remove('fade-out-anim');
                 svgElement.classList.add('fade-in-total');
                 
+                // Keep the final message for 3 seconds
                 await new Promise(r => setTimeout(r, 3000));
                 
+                // Fade out before restarting loop
                 svgElement.classList.add('fade-out-anim');
                 await new Promise(r => setTimeout(r, 1000));
             } else {
@@ -299,7 +293,7 @@ You make life a little brighter just by being in it. 💕"</p>
 
     function createHeartBurst() {
         const container = document.getElementById('page4');
-        if (!container || container.classList.contains('hidden')) return;
+        if (container.classList.contains('hidden')) return;
         for (let i = 0; i < 12; i++) {
             const heart = document.createElement('div');
             heart.innerHTML = '❤️';
